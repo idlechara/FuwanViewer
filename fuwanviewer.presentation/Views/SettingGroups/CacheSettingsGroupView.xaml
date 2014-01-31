@@ -1,0 +1,80 @@
+﻿<UserControl x:Class="FuwanViewer.Presentation.Views.SettingGroups.CacheSettingsGroupView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:System="clr-namespace:System;assembly=mscorlib"
+             xmlns:FuwanViewer="clr-namespace:FuwanViewer.Presentation.ViewModels.SettingGroups"
+             xmlns:Converters="clr-namespace:FuwanViewer.Presentation.ValueConverters"
+             mc:Ignorable="d" 
+             d:DesignHeight="300" d:DesignWidth="300">
+    
+    <UserControl.Resources>
+        <ObjectDataProvider 
+            x:Key="Units"
+            MethodName="GetValues"
+            ObjectType="{x:Type System:Enum}">
+            <ObjectDataProvider.MethodParameters>
+                <x:TypeExtension TypeName="FuwanViewer:SizeUnit" />
+            </ObjectDataProvider.MethodParameters>
+        </ObjectDataProvider>
+    </UserControl.Resources>
+
+    <StackPanel>
+        <TextBox 
+            Padding="10"
+            TextWrapping="Wrap"
+            Text="Caching enables Fuwanviewer to save images and novel information directly on your computer, so that next time they are referenced they don't have to be downloaded"/>
+        <GroupBox>
+            <GroupBox.Header>
+                <CheckBox x:Name="ckbEnableCaching" Content="Enable Caching" IsChecked="{Binding EnableCaching}" />
+            </GroupBox.Header>
+            <StackPanel Margin="30, 5,5,5" IsEnabled="{Binding ElementName=ckbEnableCaching, Path=IsChecked}">
+                <DockPanel>
+                    <TextBox DockPanel.Dock="Bottom"
+                             Text="Specified Cache directory is invalid. Saving these settings will not change cache directory."
+                             Foreground="Red"
+                             TextWrapping="Wrap"
+                             Visibility="{Binding InvalidDirectoryMessageVisibility}"/>
+                    <TextBlock DockPanel.Dock="Bottom"
+                               Text="Specified cache directory doesn't exist. Saving these settings will create this directory" 
+                               Foreground="Orange"
+                               TextWrapping="Wrap"
+                               Visibility="{Binding MissingDirectoryMessageVisibility}"/>
+                    <Label DockPanel.Dock="Left"
+                        Content="Cache Directory:" 
+                        Margin="5"
+                        Target="txtCacheDirectory"/>
+                    <Button DockPanel.Dock="Right"
+                            Margin="5"
+                            Padding="10,2"
+                            Content="..."
+                            Command="{Binding FolderBrowseCommand}"/>
+                    <TextBox x:Name="txtCacheDirectory"
+                             IsReadOnly="False"
+                             Margin="5"
+                             Text="{Binding CacheDirectory}"/>
+                </DockPanel>
+                <CheckBox Margin="5"
+                          x:Name="ckbLimitSize"
+                          IsChecked="{Binding LimitSize}"
+                          Content="Limit Size"/>
+                <DockPanel Margin="20,0,0,0" IsEnabled="{Binding ElementName=ckbLimitSize, Path=IsChecked}">
+                    <Label Margin="5"
+                        Content="Max Size:"/>
+                    <ComboBox DockPanel.Dock="Right"
+                              Margin="5"
+                              Width="50"
+                              SelectedItem="{Binding SizeUnit}"
+                              ItemsSource="{Binding Source={StaticResource Units}}">
+                    </ComboBox>
+                    <TextBox x:Name="txtMaxSize"
+                             Margin="5"
+                             Text="{Binding MaxSize}"/>
+                </DockPanel>
+                    
+            </StackPanel>
+        </GroupBox>
+    </StackPanel>
+    
+</UserControl>

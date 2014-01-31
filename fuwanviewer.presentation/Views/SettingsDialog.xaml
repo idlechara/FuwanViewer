@@ -1,0 +1,58 @@
+﻿<Window x:Class="FuwanViewer.Presentation.Views.SettingsDialog"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+        xmlns:sgvm="clr-namespace:FuwanViewer.Presentation.ViewModels.SettingGroups"
+        xmlns:sgv="clr-namespace:FuwanViewer.Presentation.Views.SettingGroups"
+        mc:Ignorable="d" 
+        Title="SettingsDialog" Height="300" Width="600">
+    
+    <Window.Resources>
+        <DataTemplate DataType="{x:Type sgvm:CacheSettingsGroupViewModel}">
+            <sgv:CacheSettingsGroupView />
+        </DataTemplate>
+
+        <DataTemplate DataType="{x:Type sgvm:GeneralSettingGroupViewModel}">
+            <sgv:GeneralSettingsGroupView />
+        </DataTemplate>
+    </Window.Resources>
+    
+    <DockPanel>
+        <StackPanel DockPanel.Dock="Bottom" Orientation="Horizontal" HorizontalAlignment="Right">
+            <Button 
+                Content="Ok" 
+                Command="{Binding ApplyCommand}"
+                Click="OkButton_Click"
+                IsDefault="True"
+                Width="40" Height="25"
+                Margin="5,2"/>
+            <Button 
+                Content="Cancel" 
+                Command="{Binding CancelCommand}"
+                Click="CancelButton_Click"
+                Width="40" Height="25"
+                Margin="5,2" />
+        </StackPanel>
+        
+        <ListBox 
+            Name="ListBox"
+            SelectedIndex="0"
+            Width="150"
+            DockPanel.Dock="Left"
+            ItemsSource="{Binding SettingGroups}">
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <TextBlock 
+                        Margin="10,2"
+                        FontSize="14"
+                        Text="{Binding DisplayName}"/>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
+        
+        <ContentControl
+            Content="{Binding Path=SelectedItem, ElementName=ListBox}"/>
+            
+    </DockPanel>
+</Window>

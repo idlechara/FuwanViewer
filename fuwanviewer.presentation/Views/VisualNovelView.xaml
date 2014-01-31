@@ -1,0 +1,251 @@
+﻿<UserControl x:Class="FuwanViewer.Presentation.Views.VisualNovelView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:eventbehav="clr-namespace:FuwanViewer.Presentation.EventBehaviours"
+             xmlns:converters="clr-namespace:FuwanViewer.Presentation.ValueConverters"
+             xmlns:stubs="clr-namespace:FuwanViewer.Presentation.SampleData.Stubs"
+             xmlns:controls="clr-namespace:FuwanViewer.Presentation.Views"
+             mc:Ignorable="d" 
+             d:DesignHeight="1688" d:DesignWidth="1003">
+
+    <UserControl.Resources>
+        <converters:TagListToStringConverter x:Key="myCollectionToStringConverter"/>
+        <converters:BoolToStringConverter x:Key="boolToStringConverter"/>
+        <converters:BytesToStringConverter x:Key="byteToStringConverter"/>
+
+        <stubs:StubVisualNovelViewModel x:Key="DesignTimeDataContext" />
+
+        <Style x:Key="TorrentHiding" TargetType="StackPanel">
+            <Style.Triggers>
+                <DataTrigger Binding="{Binding TorrentExists}" Value="False">
+                    <Setter Property="Visibility" Value="Collapsed"/>
+                </DataTrigger>
+            </Style.Triggers>
+        </Style>
+
+        <Style x:Key="FaqHiding" TargetType="TextBlock">
+            <Style.Triggers>
+                <DataTrigger Binding="{Binding FaqUrlExists}" Value="False">
+                    <Setter Property="Visibility" Value="Collapsed"/>
+                </DataTrigger>
+            </Style.Triggers>
+        </Style>
+
+        <Style x:Key="ForumHiding" TargetType="TextBlock">
+            <Style.Triggers>
+                <DataTrigger Binding="{Binding ForumUrlExists}" Value="False">
+                    <Setter Property="Visibility" Value="Collapsed"/>
+                </DataTrigger>
+            </Style.Triggers>
+        </Style>
+
+        <Style x:Key="WalkthroughHiding" TargetType="TextBlock">
+            <Style.Triggers>
+                <DataTrigger Binding="{Binding WalkthroughUrlExists}" Value="False">
+                    <Setter Property="Visibility" Value="Collapsed"/>
+                </DataTrigger>
+            </Style.Triggers>
+        </Style>
+
+        <Style x:Key="AnimatedMainArt" TargetType="Image">
+            <Style.Triggers>
+                <EventTrigger RoutedEvent="Loaded">
+                    <BeginStoryboard>
+                        <Storyboard >
+                            <DoubleAnimationUsingKeyFrames Duration="0:0:1" Storyboard.TargetProperty="Height">
+                                <DoubleAnimationUsingKeyFrames.KeyFrames>
+                                    <SplineDoubleKeyFrame Value="300" KeyTime="0:0:1" KeySpline="0.25,0.25 0.6,1"/>
+                                </DoubleAnimationUsingKeyFrames.KeyFrames>
+                            </DoubleAnimationUsingKeyFrames>
+                        </Storyboard>
+                    </BeginStoryboard>
+                </EventTrigger>
+            </Style.Triggers>
+        </Style>
+
+        <Style x:Key="screenshot" TargetType="Image">
+            <Style.Triggers>
+                <EventTrigger RoutedEvent="MouseLeftButtonDown">
+                    <BeginStoryboard>
+                        <Storyboard>
+                            <DoubleAnimationUsingKeyFrames Duration="0:0:.4" 
+                               Storyboard.TargetProperty="Width">
+                                <DoubleAnimationUsingKeyFrames.KeyFrames>
+                                    <SplineDoubleKeyFrame Value="670" 
+                                           KeyTime="0:0:.4" KeySpline="0.25,0.25 0.6,1"/>
+                                </DoubleAnimationUsingKeyFrames.KeyFrames>
+                            </DoubleAnimationUsingKeyFrames>
+
+                            <!--<DoubleAnimation Storyboard.TargetProperty="Width" To="690" Duration="0:0:.5" />-->
+                        </Storyboard>
+                    </BeginStoryboard>
+                </EventTrigger>
+                <EventTrigger RoutedEvent="MouseRightButtonDown">
+                    <BeginStoryboard>
+                        <Storyboard>
+                            <DoubleAnimationUsingKeyFrames Duration="0:0:.4" 
+                               Storyboard.TargetProperty="Width">
+                                <DoubleAnimationUsingKeyFrames.KeyFrames>
+                                    <SplineDoubleKeyFrame Value="160" 
+                                           KeyTime="0:0:.4" KeySpline="0.25,0.25 0.6,1"/>
+                                </DoubleAnimationUsingKeyFrames.KeyFrames>
+                            </DoubleAnimationUsingKeyFrames>
+                        </Storyboard>
+                    </BeginStoryboard>
+                </EventTrigger>
+            </Style.Triggers>
+
+            <Setter Property="Margin" Value="2"></Setter>
+            <Setter Property="RenderOptions.BitmapScalingMode" Value="HighQuality" ></Setter>
+            <Setter Property="Width" Value="160"></Setter>
+            <Setter Property="Height" Value="auto"></Setter>
+        </Style>
+
+        <Style x:Key="Title" TargetType="TextBlock">
+            <Setter Property="FontWeight" Value="700" />
+            <Setter Property="FontSize" Value="15" />
+            <Setter Property="FontFamily" Value="Verdana" />
+        </Style>
+
+        <Style x:Key="DefaultFont" TargetType="Control">
+            <Setter Property="FontSize" Value="12" />
+            <Setter Property="FontFamily" Value="Verdana" />
+        </Style>
+
+    </UserControl.Resources>
+
+    <UserControl.Background d:DataContext="{StaticResource DesignTimeDataContext}">
+        <ImageBrush ImageSource="{Binding Path=MainArt}" Opacity="0.2" Stretch="UniformToFill"/>
+    </UserControl.Background>
+
+    <ScrollViewer Style="{StaticResource DefaultFont}">
+        <!-- Main stack -->
+        <StackPanel d:DataContext="{StaticResource DesignTimeDataContext}" Orientation="Vertical"  MaxWidth="700">
+
+            <Image Name="MainArt"  Source="{Binding Path=MainArt}" Height="auto" Margin="5"></Image>
+
+            <StackPanel Orientation="Vertical" Margin="10" Height="auto">
+                <TextBlock Text="{Binding Title}" Style="{StaticResource Title}"/>
+                <DockPanel>
+                    <TextBlock Text="Company: "/>
+                    <TextBlock Text="{Binding Company}"/>
+                </DockPanel>
+                <DockPanel>
+                    <TextBlock Text="Release date: "/>
+                    <TextBlock Text="{Binding ReleaseDate}" />
+                </DockPanel>
+                <DockPanel>
+                    <TextBlock Text="Genres: "/>
+                    <TextBlock Text="{Binding Path=Tags, Converter={StaticResource myCollectionToStringConverter}}" />
+                </DockPanel>
+                <DockPanel>
+                    <TextBlock Text="EGS Score: "/>
+                    <TextBlock Text="{Binding EgsScore}" />
+                    <TextBlock Text=" out of 100 from "/>
+                    <TextBlock Text="{Binding EgsVotes}" />
+                    <TextBlock Text=" votes"/>
+                </DockPanel>
+
+                <TextBlock Text="Links:" Margin="0,10,0,0"/>
+                <DockPanel>
+                    <TextBlock Margin="5,2,0,0">
+                        <Hyperlink Command="{Binding HandleRequestNavigateCommand}" CommandParameter="{Binding FuwanovelUrl}">
+                            Fuwanovel
+                        </Hyperlink>
+                    </TextBlock>
+                    <TextBlock Margin="5,2,0,0">
+                        <Hyperlink Command="{Binding HandleRequestNavigateCommand}" CommandParameter="{Binding TranslationHomepageUrl}">
+                            Translation Homepage
+                        </Hyperlink>
+                    </TextBlock>
+                    <TextBlock Style="{StaticResource WalkthroughHiding}" Margin="5,2,0,0">
+                        <Hyperlink Command="{Binding HandleRequestNavigateCommand}" CommandParameter="{Binding WalkthroughUrl}">
+                            Walktrough
+                        </Hyperlink>
+                    </TextBlock>
+                    <TextBlock Style="{StaticResource ForumHiding}" Margin="5,2,0,0">
+                        <Hyperlink Command="{Binding HandleRequestNavigateCommand}" CommandParameter="{Binding ForumUrl}">
+                            Forum
+                        </Hyperlink>
+                    </TextBlock>
+                    <TextBlock Style="{StaticResource FaqHiding}" Margin="5,2,0,0">
+                        <Hyperlink  Command="{Binding HandleRequestNavigateCommand}" CommandParameter="{Binding FaqUrl}">
+                            FAQ
+                        </Hyperlink>
+                    </TextBlock>
+                </DockPanel>
+
+                <TextBlock Text="Screenshots (left click to enlarge, right click to shrink):" Margin="0,10,0,0"/>
+
+                <ItemsControl x:Name="screenshotPanel" Margin="10" ItemsSource="{Binding Screenshoots}">
+                    <ItemsControl.Template>
+                        <ControlTemplate>
+                            <WrapPanel FlowDirection="LeftToRight" IsItemsHost="true">
+                            </WrapPanel>
+                        </ControlTemplate>
+                    </ItemsControl.Template>
+
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <Image Style="{StaticResource screenshot}" Source="{Binding}" >
+                            </Image>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+
+                <DockPanel Margin="0,10">
+                    <TextBlock Text="Summary: "/>
+                    <TextBlock Text="{Binding Summary}"  TextWrapping="Wrap" Height="auto" Width="auto"/>
+                </DockPanel>
+
+                <DockPanel Margin="0,10">
+                    <TextBlock Text="Translation team: "/>
+                    <TextBlock Text="{Binding TeamListing}"  TextWrapping="Wrap" Height="auto" Width="auto"/>
+                </DockPanel>
+
+                <DockPanel Margin="0,10">
+                    <TextBlock Text="Notes: "/>
+                    <TextBlock Text="{Binding Notes}"  TextWrapping="Wrap" Height="auto" Width="auto"/>
+                </DockPanel>
+
+                <DockPanel Margin="0,10">
+                    <TextBlock Text="Troubleshoot: "/>
+                    <TextBlock Text="{Binding TroubleshootText}"  TextWrapping="Wrap" Height="auto" Width="auto"/>
+                </DockPanel>
+
+                <StackPanel Style="{StaticResource TorrentHiding}">
+                    <DockPanel Margin="0,10,0,3">
+                        <TextBlock Text="Torrent Info: "/>
+                    </DockPanel>
+                    <DockPanel Margin="10,0">
+                        <TextBlock Text="Name: "/>
+                        <TextBlock Text="{Binding Path=TorrentName}" />
+                    </DockPanel>
+                    <DockPanel Margin="10,0">
+                        <TextBlock Text="Size: "/>
+                        <TextBlock Text="{Binding Path=TorrentSize,  Converter={StaticResource byteToStringConverter}}" />
+                    </DockPanel>
+                    <DockPanel Margin="10,0">
+                        <TextBlock Text="Requires Install: "/>
+                        <TextBlock Text="{Binding Path=TorrentRequiresInstall, Converter={StaticResource boolToStringConverter}}" />
+                    </DockPanel>
+                    <DockPanel Margin="10,0">
+                        <TextBlock Text="Requires Japanese locale: "/>
+                        <TextBlock Text="{Binding Path=TorrentRequiresJpLocale, Converter={StaticResource boolToStringConverter}}" />
+                    </DockPanel>
+                    <DockPanel Margin="10,0">
+                        <TextBlock Text="URL: "/>
+                        <TextBlock>
+                        <Hyperlink Command="{Binding HandleRequestNavigateCommand}" CommandParameter="{Binding TorrentURL}">
+                            <TextBlock Text="{Binding TorrentURL}"></TextBlock>
+                        </Hyperlink>
+                    </TextBlock>
+
+                    </DockPanel>
+                </StackPanel>
+            </StackPanel>
+        </StackPanel>
+    </ScrollViewer>
+</UserControl>

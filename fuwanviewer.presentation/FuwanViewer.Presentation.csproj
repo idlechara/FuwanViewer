@@ -1,0 +1,364 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{818F6E1B-1A12-4690-9D95-3D12DF2B39B8}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>FuwanViewer.Presentation</RootNamespace>
+    <AssemblyName>FuwanViewer.Presentation</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <WarningLevel>4</WarningLevel>
+    <ExpressionBlendVersion>5.0.40218.0</ExpressionBlendVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Microsoft.Expression.Interactions, Version=4.5.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
+    <Reference Include="Microsoft.Expression.Prototyping.Interactivity, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
+    <Reference Include="Microsoft.Windows.Design.Interaction, Version=3.5.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
+    <Reference Include="System" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Xaml">
+      <RequiredTargetFramework>4.0</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="WindowsBase" />
+    <Reference Include="PresentationCore" />
+    <Reference Include="PresentationFramework" />
+  </ItemGroup>
+  <ItemGroup>
+    <ApplicationDefinition Include="App.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </ApplicationDefinition>
+    <Compile Include="Enums.cs" />
+    <Compile Include="EventBehaviours\EventBehaviourFactory.cs" />
+    <Compile Include="EventBehaviours\ControlBehaviours.cs" />
+    <Compile Include="EventBehaviours\ImageBehaviour.cs" />
+    <Compile Include="EventBehaviours\GridBehaviours.cs" />
+    <Compile Include="EventBehaviours\WindowBehaviours.cs" />
+    <Compile Include="HistoryList.cs" />
+    <Compile Include="SampleData\Stubs\StubControlPanelViewModel.cs" />
+    <Compile Include="SampleData\Stubs\StubFeaturedVisualNovelsViewModel.cs" />
+    <Compile Include="SampleData\Stubs\StubHomeWorkspaceViewModel.cs" />
+    <Compile Include="SampleData\Stubs\StubScreenshotViewModel.cs" />
+    <Compile Include="SampleData\Stubs\StubVisualNovelWidgetViewModel.cs" />
+    <Compile Include="SampleData\Stubs\StubAllVisualNovelsViewModel.cs" />
+    <Compile Include="SampleData\Stubs\StubMainWindowViewModel.cs" />
+    <Compile Include="SampleData\Stubs\StubSearchPanelViewModel.cs" />
+    <Compile Include="SampleData\Stubs\StubTagSearchGroupViewModel.cs" />
+    <Compile Include="SampleData\Stubs\StubVisualNovel.cs" />
+    <Compile Include="SampleData\Stubs\StubVisualNovelPreviewViewModel.cs" />
+    <Compile Include="SampleData\Stubs\StubVisualNovelViewModel.cs" />
+    <Compile Include="ValueConverters\BoolToStringConverter.cs" />
+    <Compile Include="ValueConverters\BoolToVisibilityConverter.cs" />
+    <Compile Include="ValueConverters\BytesToStringConverter.cs" />
+    <Compile Include="ValueConverters\StringToVisibility.cs" />
+    <Compile Include="ValueConverters\TagListToStringConverter.cs" />
+    <Compile Include="Pair.cs" />
+    <Compile Include="RelayCommand.cs" />
+    <Compile Include="Views\SettingsDialog.xaml.cs">
+      <DependentUpon>SettingsDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UiServices.cs" />
+    <Compile Include="ViewModels\Abstract\SearchGroupViewModel.cs" />
+    <Compile Include="ViewModels\Abstract\SettingsGroupViewModel.cs" />
+    <Compile Include="ViewModels\Abstract\SidePanelViewModel.cs" />
+    <Compile Include="ViewModels\Abstract\ViewModelBase.cs" />
+    <Compile Include="ViewModels\Abstract\WorkspaceViewModel.cs" />
+    <Compile Include="ViewModels\AllVisualNovelsViewModel.cs" />
+    <Compile Include="ViewModels\ControlPanelViewModel.cs" />
+    <Compile Include="ViewModels\FeaturedVisualNovelsViewModel.cs" />
+    <Compile Include="ViewModels\HomeViewModel.cs" />
+    <Compile Include="ViewModels\LoginViewModel.cs" />
+    <Compile Include="ViewModels\MainWindowViewModel.cs" />
+    <Compile Include="ViewModels\SearchGroups\CompanySearchGroupViewModel.cs" />
+    <Compile Include="ViewModels\SearchGroups\OtherSearchGroupViewModel.cs" />
+    <Compile Include="ViewModels\SearchGroups\TagSearchGroupViewModel.cs" />
+    <Compile Include="ViewModels\SearchGroups\TitleSearchGroupViewModel.cs" />
+    <Compile Include="ViewModels\SearchPanelViewModel.cs" />
+    <Compile Include="ViewModels\SettingGroups\CacheSettingsGroupViewModel.cs" />
+    <Compile Include="ViewModels\SettingGroups\GeneralSettingGroupViewModel.cs" />
+    <Compile Include="ViewModels\SettingsDialogViewModel.cs" />
+    <Compile Include="ViewModels\VisualNovelPreviewViewModel.cs" />
+    <Compile Include="ViewModels\VisualNovelViewModel.cs" />
+    <Compile Include="ViewModels\VisualNovelWidgetViewModel.cs" />
+    <Compile Include="Views\AllVisualNovelsView.xaml.cs">
+      <DependentUpon>AllVisualNovelsView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ControlPanelView.xaml.cs">
+      <DependentUpon>ControlPanelView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\FeaturedVisualNovelsView.xaml.cs">
+      <DependentUpon>FeaturedVisualNovelsView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\HomeView.xaml.cs">
+      <DependentUpon>HomeView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\LoginView.xaml.cs">
+      <DependentUpon>LoginView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\NullVisualNovelView.xaml.cs">
+      <DependentUpon>NullVisualNovelView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\SearchGroups\CompanySearchGroupView.xaml.cs">
+      <DependentUpon>CompanySearchGroupView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\SearchGroups\OtherSearchGroupView.xaml.cs">
+      <DependentUpon>OtherSearchGroupView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\SearchGroups\TagSearchGroupView.xaml.cs">
+      <DependentUpon>TagSearchGroupView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\SearchGroups\TitleSearchGroupView.xaml.cs">
+      <DependentUpon>TitleSearchGroupView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\SearchPanelView.xaml.cs">
+      <DependentUpon>SearchPanelView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\SettingGroups\CacheSettingsGroupView.xaml.cs">
+      <DependentUpon>CacheSettingsGroupView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\SettingGroups\GeneralSettingsGroupView.xaml.cs">
+      <DependentUpon>GeneralSettingsGroupView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\VisualNovelPreviewView.xaml.cs">
+      <DependentUpon>VisualNovelPreviewView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\VisualNovelView.xaml.cs">
+      <DependentUpon>VisualNovelView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\VisualNovelWidgetView.xaml.cs">
+      <DependentUpon>VisualNovelWidgetView.xaml</DependentUpon>
+    </Compile>
+    <Page Include="Views\MainWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Compile Include="App.xaml.cs">
+      <DependentUpon>App.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Views\MainWindow.xaml.cs">
+      <DependentUpon>MainWindow.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Page Include="Views\Resources\MainWindowResources.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\Resources\Styles.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\SettingsDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\AllVisualNovelsView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\ControlPanelView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\FeaturedVisualNovelsView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\HomeView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\LoginView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\NullVisualNovelView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\SearchGroups\CompanySearchGroupView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\SearchGroups\OtherSearchGroupView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\SearchGroups\TagSearchGroupView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\SearchGroups\TitleSearchGroupView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\SearchPanelView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Resources\SearchPanelResources.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\SettingGroups\CacheSettingsGroupView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\SettingGroups\GeneralSettingsGroupView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\VisualNovelPreviewView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\VisualNovelView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\VisualNovelWidgetView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Properties\AssemblyInfo.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <AppDesigner Include="Properties\" />
+    <Resource Include="Resources\Fonts\LeagueGothic.otf" />
+    <Resource Include="Resources\Fonts\TikalSans.otf" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\FuwanViewer.Fuwanovel\FuwanViewer.Fuwanovel.csproj">
+      <Project>{bf62aa6c-fe5b-4e46-89be-e49d3a21789f}</Project>
+      <Name>FuwanViewer.Fuwanovel</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\FuwanViewer.Model\FuwanViewer.Model.csproj">
+      <Project>{d387f9f0-4e36-450f-bb11-ce82ab904de5}</Project>
+      <Name>FuwanViewer.Model</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\FuwanViewer.Repository.Fake\FuwanViewer.Repository.Fake.csproj">
+      <Project>{717c79c3-d615-48c9-93c4-adab4b268333}</Project>
+      <Name>FuwanViewer.Repository.Fake</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\FuwanViewer.Repository\FuwanViewer.Repository.csproj">
+      <Project>{ead54211-37e2-41e1-aee8-b5fe6420a720}</Project>
+      <Name>FuwanViewer.Repository</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\FuwanViewer.Services\FuwanViewer.Services.csproj">
+      <Project>{aadec5e7-5896-4a4c-ae67-9baced1098ee}</Project>
+      <Name>FuwanViewer.Services</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\fuwan-logo.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\cogwheel_button.png" />
+    <Resource Include="Images\refresh_button.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\pin_button.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="SampleData\Images\EfMainArt.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\LoadingImage.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="SampleData\Images\Ef0.jpg" />
+    <Resource Include="SampleData\Images\Ef1.jpg" />
+    <Resource Include="SampleData\Images\Ef2.jpg" />
+    <Resource Include="SampleData\Images\Ef3.jpg" />
+    <Resource Include="SampleData\Images\Ef4.jpg" />
+    <Resource Include="SampleData\Images\Ef5.jpg" />
+    <Resource Include="SampleData\Images\Ef6.jpg" />
+    <Resource Include="SampleData\Images\Ef7.jpg" />
+    <Resource Include="SampleData\Images\Ef8.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Progress.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\body-bg.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\site-logo.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\add_button.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\home_background.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\ShowAllNovels.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\ShowFeatured.png" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

@@ -1,0 +1,60 @@
+﻿<UserControl x:Class="FuwanViewer.Presentation.Views.SearchPanelView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             mc:Ignorable="d" 
+             Width="220"
+             d:DesignHeight="430">
+    
+    <UserControl.Resources>
+        <ResourceDictionary Source="Resources/SearchPanelResources.xaml"/>
+    </UserControl.Resources>
+
+    <DockPanel d:DataContext="{StaticResource DesignTimeDataContext}">
+        <!-- 
+        Header of panel, with pin button in corner
+        -->
+        <DockPanel DockPanel.Dock="Top">
+            <Button 
+                Width="20" Height="15" Margin="5" 
+                DockPanel.Dock="Right"
+                HorizontalAlignment="Right"
+                Command="{Binding ToggleCommand}">
+                <Button.Content>
+                    <Image Source="pack://application:,,,/FuwanViewer.Presentation;component/Images/pin_button.png"/>
+                </Button.Content>
+            </Button>
+            
+            <TextBlock 
+                Margin="10,0"
+                TextAlignment="Left"
+                Text="{Binding DisplayName}"
+                FontSize="16"
+                FontWeight="Medium"/>
+            
+        </DockPanel>
+        
+        <!--
+        Footer of panel, with Apply button in corner
+        -->
+        <Button 
+            DockPanel.Dock="Bottom" 
+            Content="Apply"
+            Command="{Binding SearchCommand}"
+            HorizontalAlignment="Right" 
+            Margin="10,10"
+            Padding="10,2"/>
+        
+        <!--
+        Search groups, put as items of stackpanel
+        -->
+        <ItemsControl ItemsSource="{Binding SearchGroups}" Margin="5">
+            <ItemsControl.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <StackPanel Orientation="Vertical" />
+                </ItemsPanelTemplate>
+            </ItemsControl.ItemsPanel>
+        </ItemsControl>
+    </DockPanel>
+</UserControl>

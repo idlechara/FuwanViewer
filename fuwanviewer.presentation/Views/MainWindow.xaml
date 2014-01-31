@@ -1,0 +1,47 @@
+﻿<Window x:Class="FuwanViewer.Presentation.Views.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="{Binding DisplayName}" Height="600" Width="900"
+        MinHeight="600" MinWidth="900"
+        xmlns:vm="clr-namespace:FuwanViewer.Presentation.ViewModels"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+        xmlns:behav="clr-namespace:FuwanViewer.Presentation.EventBehaviours"
+        xmlns:stubs="clr-namespace:FuwanViewer.Presentation.SampleData.Stubs"
+        behav:WindowBehaviours.ClosingCommand="{Binding ClosingCommand}"
+        mc:Ignorable="d">
+    
+    <Window.Resources>
+        <ResourceDictionary Source="Resources/MainWindowResources.xaml"/>
+    </Window.Resources>
+    
+    <Window.Background>
+        <ImageBrush ImageSource="..\Images\body-bg.png" Opacity="1"></ImageBrush>
+    </Window.Background>
+    
+    <DockPanel d:DataContext="{StaticResource DesignTimeDataContext}">
+        <ContentControl
+            Height="auto"
+            DockPanel.Dock="Top"
+            Content="{Binding ControlPanel}"/>
+
+        <ContentControl
+            DockPanel.Dock="Left"
+            Content="{Binding HiddenPanels}"
+            ContentTemplate="{StaticResource HiddenPanelsTemplate}"/>
+
+        <ContentControl
+            DockPanel.Dock="Left"
+            Content="{Binding SidePanels}"
+            ContentTemplate="{StaticResource SidePanelsTemplate}"/>
+        <Grid>
+            <ContentControl
+                Content="{Binding}"
+                ContentTemplate="{StaticResource mainContentTemplate}">
+                <ContentControl.Background>
+                    <SolidColorBrush Color="Transparent"></SolidColorBrush>
+                </ContentControl.Background>
+            </ContentControl>
+        </Grid>
+    </DockPanel>
+</Window>

@@ -1,0 +1,169 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:vm="clr-namespace:FuwanViewer.Presentation.ViewModels"
+                    xmlns:stubs="clr-namespace:FuwanViewer.Presentation.SampleData.Stubs"
+                    xmlns:view="clr-namespace:FuwanViewer.Presentation.Views">
+
+    <!--    DESIGN TIME SUPPORT     -->
+    <stubs:StubMainWindowViewModel x:Key="DesignTimeDataContext"/>
+
+    <DataTemplate DataType="{x:Type stubs:StubAllVisualNovelsViewModel}">
+        <view:AllVisualNovelsView/>
+    </DataTemplate>
+
+    <DataTemplate DataType="{x:Type stubs:StubSearchPanelViewModel}">
+        <view:SearchPanelView/>
+    </DataTemplate>
+
+    <DataTemplate DataType="{x:Type stubs:StubFeaturedVisualNovelsViewModel}">
+        <view:FeaturedVisualNovelsView/>
+    </DataTemplate>
+
+    <DataTemplate DataType="{x:Type stubs:StubHomeWorkspaceViewModel}">
+        <view:HomeView/>
+    </DataTemplate>
+
+    <!--    DATA TEMPLATES   -->
+    <DataTemplate DataType="{x:Type vm:AllVisualNovelsViewModel}">
+        <view:AllVisualNovelsView />
+    </DataTemplate>
+
+    <DataTemplate DataType="{x:Type vm:FeaturedVisualNovelsViewModel}">
+        <view:FeaturedVisualNovelsView/>
+    </DataTemplate>
+
+    <DataTemplate DataType="{x:Type vm:HomeViewModel}">
+        <view:HomeView />
+    </DataTemplate>
+
+    <DataTemplate x:Key="NormalVisualNovelTemplate">
+        <view:VisualNovelView />
+    </DataTemplate>
+
+    <DataTemplate x:Key="NullVisualNovelTemplate">
+        <view:NullVisualNovelView />
+    </DataTemplate>
+
+    <DataTemplate DataType="{x:Type vm:VisualNovelViewModel}">
+        <ContentControl x:Name="cc" Content="{Binding}" ContentTemplate="{DynamicResource NormalVisualNovelTemplate}" />
+
+        <DataTemplate.Triggers>
+            <DataTrigger Binding="{Binding IsNull}" Value="True">
+                <Setter TargetName="cc" Property="ContentTemplate" Value="{DynamicResource NullVisualNovelTemplate}" />
+            </DataTrigger>
+        </DataTemplate.Triggers>
+    </DataTemplate>
+
+    <DataTemplate DataType="{x:Type vm:ControlPanelViewModel}">
+        <view:ControlPanelView />
+    </DataTemplate>
+
+    <DataTemplate DataType="{x:Type vm:SearchPanelViewModel}">
+        <view:SearchPanelView />
+    </DataTemplate>
+    
+    <!--
+    Explains how to render HiddenPanels collection
+    -->
+    <DataTemplate x:Key="HiddenPanelsTemplate">
+        <DataTemplate.Resources>
+            <DataTemplate x:Key="TogglableRotatedButton">
+                <Button 
+                    Content="{Binding DisplayName}"
+                    Command="{Binding ToggleCommand}">
+                    <Button.LayoutTransform>
+                        <RotateTransform Angle="90"/>
+                    </Button.LayoutTransform>
+                </Button>
+
+            </DataTemplate>
+        </DataTemplate.Resources>
+
+        <ItemsControl 
+            ItemsSource="{Binding}"
+            ItemTemplate="{StaticResource TogglableRotatedButton}"/>
+    </DataTemplate>
+
+    <!--
+    Explains how to render SidePanels collection
+    -->
+    <DataTemplate x:Key="SidePanelsTemplate">
+        <ItemsControl ItemsSource="{Binding}">
+            <ItemsControl.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <StackPanel Orientation="Horizontal"/>
+                </ItemsPanelTemplate>
+            </ItemsControl.ItemsPanel>
+        </ItemsControl>
+    </DataTemplate>
+
+    <!--
+    Explains how to render MainContent (i.e. Home, Login and Workspaces), 
+    -->
+    <DataTemplate x:Key="mainContentTemplate">
+        <DataTemplate.Resources>
+            <!-- all minor data templates -->
+            <DataTemplate x:Key="ClosableTabItemTemplate">
+                <DockPanel Width="120">
+                    <Button 
+                        Command="{Binding Path=CloseCommand}"
+                        Background="LightPink"
+                        Content="X"
+                        Cursor="Hand"
+                        DockPanel.Dock="Right"
+                        Focusable="False"
+                        FontFamily="Courier" 
+                        FontSize="9"
+                        FontWeight="Bold"  
+                        Margin="0,1,0,0"
+                        Padding="0"
+                        VerticalContentAlignment="Bottom"
+                        Width="16" Height="16" 
+                        />
+                    <ContentPresenter 
+                        Content="{Binding Path=DisplayName}" 
+                        VerticalAlignment="Center" 
+                        />
+                </DockPanel>
+            </DataTemplate>
+            <DataTemplate x:Key="workspacesTemplate">
+                <TabControl
+                IsSynchronizedWithCurrentItem="True"
+                ItemsSource="{Binding}"
+                ItemTemplate="{StaticResource ClosableTabItemTemplate}"            
+                />
+            </DataTemplate>
+            <DataTemplate x:Key="homeTemplate">
+                <view:HomeView/>
+            </DataTemplate>
+            <DataTemplate x:Key="loginTemplate">
+                <view:LoginView/>
+            </DataTemplate>
+            
+        </DataTemplate.Resources>
+        
+        <!-- actual data template here -->
+        <ContentControl
+            x:Name="cc"
+            Content="{Binding Workspaces}"
+            ContentTemplate="{StaticResource workspacesTemplate}"
+            />
+
+        <!-- triggers to swap content aproperiately -->
+        <DataTemplate.Triggers>
+            <DataTrigger Binding="{Binding Path=Authenticated}" Value="false">
+                <Setter TargetName="cc" Property="Content" Value="{Binding LoginPage}"/>
+                <Setter TargetName="cc" Property="ContentTemplate" Value="{StaticResource loginTemplate}"/>
+            </DataTrigger>
+            <MultiDataTrigger>
+                <MultiDataTrigger.Conditions>
+                    <Condition Binding="{Binding Path=Authenticated}" Value="true"/>
+                    <Condition Binding="{Binding Path=Workspaces.Count}" Value="0"/>
+                </MultiDataTrigger.Conditions>
+                <Setter TargetName="cc" Property="Content" Value="{Binding HomePage}"/>
+                <Setter TargetName="cc" Property="ContentTemplate" Value="{StaticResource homeTemplate}"/>
+            </MultiDataTrigger>
+        </DataTemplate.Triggers>
+    </DataTemplate>
+
+</ResourceDictionary>

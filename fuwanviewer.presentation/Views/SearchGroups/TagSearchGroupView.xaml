@@ -1,0 +1,93 @@
+﻿<UserControl
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:Stubs="clr-namespace:FuwanViewer.Presentation.SampleData.Stubs" x:Class="FuwanViewer.Presentation.Views.SearchGroups.TagSearchGroupView" 
+             mc:Ignorable="d" 
+             d:DesignHeight="300" d:DesignWidth="200">
+    
+    <UserControl.Resources>
+        <Stubs:StubTagSearchGroupViewModel  x:Key="DesignTimeDataContext"/>
+
+        <Style x:Key="CuteCheckBox" TargetType="{x:Type CheckBox}">
+            <Setter Property="SnapsToDevicePixels" Value="true"/>
+            <Setter Property="FocusVisualStyle" Value="{DynamicResource CheckBoxFocusVisual}"/>
+            <Setter Property="Background" Value="{DynamicResource NormalBrush}"/>
+            <Setter Property="BorderBrush" Value="{DynamicResource NormalBorderBrush}"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type CheckBox}">
+
+                        <!-- BulletDecorator is used to provide baseline alignment between the checkmark and the Content -->
+                        <BulletDecorator Background="Transparent">
+                            <BulletDecorator.Bullet>
+                                <Grid Width="13" Height="13">
+                                    <Border x:Name="Border" Background="{TemplateBinding Background}" BorderThickness="{TemplateBinding BorderThickness}" BorderBrush="{DynamicResource {x:Static SystemColors.ActiveBorderBrushKey}}"/>
+                                    <Path x:Name="path2" Data="M1,1.604 C7.0880001,6.3 12.834,13.188 12.834,13.188 M13.663,0.99999999 C6.4121251,5.077125 1.4130001,12.833 1.4130001,12.833" HorizontalAlignment="Left" Height="14.188" Margin="-0.834,-0.604,-0.829,-0.584" Stretch="Fill" Stroke="#FFC70000" StrokeThickness="2" VerticalAlignment="Top" Width="14.663"/>
+                                    <Path x:Name="path" Data="M1,9.5780001 C1,9.5780001 3.7343635,10.046836 5.2969999,14.109 M4.875,13.938 C4.875,13.938 7.9686799,1.1875 13.469,1" HorizontalAlignment="Left" Height="15.109" Margin="-0.156,-2.355,-1.313,0" Stretch="Fill" Stroke="#FF348B1A" StrokeThickness="2" VerticalAlignment="Top" Width="14.469"/>
+                                    <Path x:Name="path1" HorizontalAlignment="Left" Height="12.567" Margin="2.094,-0.067,0,0" Stretch="Fill" Stroke="#FF0051C7" StrokeThickness="2" VerticalAlignment="Top" Width="8.534">
+                                        <Path.Data>
+                                            <PathGeometry>
+                                                <PathFigure StartPoint="4.28115461012229,8.8999995422513">
+                                                    <PolyBezierSegment Points="4.2181663,7.8375343 4.2811546,6.7120716 4.2811546,6.7120716 4.2811546,6.7120716 6.7923101,7.011173 7.4680504,4.087157 7.8435377,2.4623743 6.5935802,0.77476464 4.281159,1.0247565 4.281159,1.0247565 0.15635961,0.587 1.1563109,4.212"/>
+                                                </PathFigure>
+                                                <PathFigure IsClosed="True" StartPoint="4.656,11.567">
+                                                    <BezierSegment IsSmoothJoin="True" Point3="4.656,11.567" Point2="4.656,11.567" Point1="4.656,11.567"/>
+                                                    <BezierSegment Point3="4.656,11.567" Point2="4.656,11.567" Point1="4.656,11.567"/>
+                                                    <BezierSegment IsSmoothJoin="True" Point3="4.656,11.567" Point2="4.656,11.567" Point1="4.656,11.567"/>
+                                                    <BezierSegment Point3="4.656,11.567" Point2="4.656,11.567" Point1="4.656,11.567"/>
+                                                </PathFigure>
+                                            </PathGeometry>
+                                        </Path.Data>
+                                    </Path>
+                                </Grid>
+                            </BulletDecorator.Bullet>
+                            <ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" Margin="{TemplateBinding Padding}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}" RecognizesAccessKey="True"/>
+                        </BulletDecorator>
+
+                        <!-- This uses Visibility to hide and show the CheckMark on IsChecked -->
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsChecked" Value="False">
+                                <Setter Property="Visibility" TargetName="path" Value="Collapsed"/>
+                                <Setter Property="Visibility" TargetName="path1" Value="Collapsed"/>
+                            </Trigger>
+                            <Trigger Property="IsChecked" Value="True">
+                                <Setter Property="Visibility" TargetName="path2" Value="Collapsed"/>
+                                <Setter Property="Visibility" TargetName="path1" Value="Collapsed"/>
+                            </Trigger>
+                            <Trigger Property="IsChecked" Value="{x:Null}">
+                                <Setter Property="Visibility" TargetName="path2" Value="Collapsed"/>
+                                <Setter Property="Visibility" TargetName="path" Value="Collapsed"/>
+                                <Setter Property="Visibility" TargetName="path1" Value="Collapsed"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </UserControl.Resources>
+    
+    <Grid d:DataContext="{StaticResource DesignTimeDataContext}">
+
+        <GroupBox Header="Tags">
+            <ItemsControl ItemsSource="{Binding Pairs}">
+                <ItemsControl.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <WrapPanel/>
+                    </ItemsPanelTemplate>
+                </ItemsControl.ItemsPanel>
+
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <StackPanel Orientation="Horizontal" Margin="10,5" Width="70" >
+                            <CheckBox IsThreeState="True" IsChecked="{Binding Item2}" Style="{DynamicResource CuteCheckBox}"/>
+                            <TextBlock Text="{Binding Item1}" Margin="3,0,0,0"/>
+                        </StackPanel>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
+        </GroupBox>
+    </Grid>
+</UserControl>

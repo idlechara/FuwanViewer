@@ -1,0 +1,96 @@
+﻿<UserControl x:Class="FuwanViewer.Presentation.Views.VisualNovelPreviewView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:converters="clr-namespace:FuwanViewer.Presentation.ValueConverters"
+             xmlns:stubs="clr-namespace:FuwanViewer.Presentation.SampleData.Stubs"
+             mc:Ignorable="d"
+             d:DesignHeight="150" d:DesignWidth="500">
+    
+    <UserControl.Resources>
+        <stubs:StubVisualNovelPreviewViewModel x:Key="DesignTimeDataContext" />
+
+        <converters:TagListToStringConverter x:Key="myCollectionToStringConverter"/>
+
+        <Style x:Key="Title" TargetType="TextBlock">
+            <Setter Property="Margin" Value="2"></Setter>
+            <Setter Property="FontSize" Value="14" />
+            <Setter Property="FontFamily" Value="/FuwanViewer.Presentation;component/Resources/Fonts/#Tikal Sans Medium" />
+        </Style>
+
+        <Style x:Key="Tags" TargetType="TextBlock">
+            <Setter Property="Margin" Value="1"></Setter>
+            <Setter Property="FontSize" Value="10" />
+            <Setter Property="FontFamily" Value="/FuwanViewer.Presentation;component/Resources/Fonts/#Tikal Sans Medium" />
+        </Style>
+
+        <Style x:Key="Description" TargetType="TextBlock">
+            <Setter Property="Margin" Value="1"></Setter>
+            <Setter Property="FontSize" Value="11" />
+            <Setter Property="FontFamily" Value="/FuwanViewer.Presentation;component/Resources/Fonts/#Tikal Sans Medium" />
+        </Style>
+    </UserControl.Resources>
+    <Grid>
+
+        <!--<Image  Grid.Row="0" Grid.Column="0" Source="{Binding Path=MainArt}" Stretch="UniformToFill">
+            <Image.Effect>
+                <BlurEffect RenderingBias="Quality"/>
+            </Image.Effect>
+            <Image.OpacityMask>
+                <LinearGradientBrush StartPoint="0,0.5" EndPoint="0,0">
+                    <GradientStop Color="Black" Offset="1"/>
+                    <GradientStop Color="#7C000000"/>
+                </LinearGradientBrush>
+            </Image.OpacityMask>
+        </Image>-->
+
+        <DockPanel Grid.Column="0" Grid.Row="0" d:DataContext="{StaticResource DesignTimeDataContext}">
+            
+            
+            
+            <Border  Margin="10" BorderThickness="2" BorderBrush="#FFFFFFFF">
+                <Image DockPanel.Dock="Left" Source="{Binding Cover}" RenderOptions.BitmapScalingMode="HighQuality"/>
+            </Border>
+
+            <Grid d:DataContext="{StaticResource DesignTimeDataContext}" 
+            DockPanel.Dock="Top" >
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="auto"></RowDefinition>
+                    <RowDefinition Height="auto"></RowDefinition>
+                    <RowDefinition ></RowDefinition>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+
+
+                <TextBlock Grid.Row="0"
+                Style="{StaticResource Title}"
+            Text="{Binding Title}"
+            TextAlignment="Center"
+            FontSize="20"
+            Margin="10"/>
+
+
+                <TextBlock  Grid.Row="1"
+                Style="{StaticResource Tags}"
+            Text="{Binding Path=Tags, Converter={StaticResource myCollectionToStringConverter}}"
+            TextWrapping="Wrap"
+            Margin="5"/>
+
+                <ScrollViewer Grid.Row="2">
+
+                    <TextBlock  
+                Style="{StaticResource Description}"
+            Text="{Binding Description}" 
+            TextWrapping="Wrap"
+            Margin="5"/>
+                </ScrollViewer>
+
+
+            </Grid>
+
+        </DockPanel>
+    </Grid>
+</UserControl>

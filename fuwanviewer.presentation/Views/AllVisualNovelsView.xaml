@@ -1,0 +1,71 @@
+﻿<UserControl x:Class="FuwanViewer.Presentation.Views.AllVisualNovelsView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:vm="clr-namespace:FuwanViewer.Presentation.ViewModels"
+             xmlns:v="clr-namespace:FuwanViewer.Presentation.Views"
+             xmlns:eventbehav="clr-namespace:FuwanViewer.Presentation.EventBehaviours"
+             xmlns:converters="clr-namespace:FuwanViewer.Presentation.ValueConverters"
+             xmlns:stubs="clr-namespace:FuwanViewer.Presentation.SampleData.Stubs"
+             mc:Ignorable="d" 
+             d:DesignHeight="400" d:DesignWidth="1000">
+    
+    <UserControl.Resources>     
+        <converters:TagListToStringConverter x:Key="myCollectionToStringConverter"/>
+
+        <stubs:StubAllVisualNovelsViewModel x:Key="DesignTimeDataContext"/>
+
+        <DataTemplate DataType="{x:Type vm:VisualNovelPreviewViewModel}">
+            <v:VisualNovelPreviewView />
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type stubs:StubVisualNovelPreviewViewModel}">
+            <v:VisualNovelPreviewView />
+        </DataTemplate>
+    </UserControl.Resources>
+    
+    <UserControl.Background>
+        <SolidColorBrush Color="Transparent"></SolidColorBrush>
+    </UserControl.Background>
+
+    <Grid d:DataContext="{StaticResource DesignTimeDataContext}" Background="Transparent">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="2*"/>
+            <RowDefinition Height="5"/>
+            <RowDefinition MaxHeight="150" Height="*"/>
+        </Grid.RowDefinitions>
+
+        <DataGrid 
+            AutoGenerateColumns="False"
+            ItemsSource="{Binding AllNovels}"
+            eventbehav:ControlBehaviours.DoubleClickCommand="{Binding OpenVisualNovelCommand}"
+            eventbehav:ControlBehaviours.DoubleClickCommandParameter="{Binding AllNovels.CurrentItem}"
+            IsReadOnly="True"
+            IsSynchronizedWithCurrentItem="True"
+            SelectionMode="Single"
+            SelectionUnit="FullRow">
+
+            <DataGrid.Background>
+                <SolidColorBrush Color="Transparent"></SolidColorBrush>
+            </DataGrid.Background>
+
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Title" Binding="{Binding Title}" MinWidth="100" 
+                                    Visibility="{Binding Path=DisplaySettings.ColumnVisibility[Columns.Title]}"/>
+                <DataGridTextColumn Header="Company" Binding="{Binding Company}"/>
+                <DataGridTextColumn Header="Description" Binding="{Binding Description}"/>
+                <DataGridTextColumn Header="Tags" Binding="{Binding Path=Tags, Converter={StaticResource myCollectionToStringConverter}}"/>
+            </DataGrid.Columns>
+        </DataGrid>
+        
+        <GridSplitter
+            Grid.Row="1"
+            Background="DarkGray"
+            HorizontalAlignment="Stretch"/>
+        
+        <ContentControl
+            Grid.Row="2"
+            Content="{Binding VisualNovelPreview}" Background="Transparent">
+        </ContentControl>
+    </Grid>
+</UserControl>

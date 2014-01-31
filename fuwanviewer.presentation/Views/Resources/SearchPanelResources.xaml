@@ -1,0 +1,27 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:sgvm="clr-namespace:FuwanViewer.Presentation.ViewModels.SearchGroups"
+                    xmlns:sgv="clr-namespace:FuwanViewer.Presentation.Views.SearchGroups"
+                    xmlns:stubs="clr-namespace:FuwanViewer.Presentation.SampleData.Stubs">
+
+    <!-- Design time support -->
+    <stubs:StubSearchPanelViewModel x:Key="DesignTimeDataContext" />
+        
+    <!-- DATA TEMPLATES -->
+    <DataTemplate DataType="{x:Type sgvm:TitleSearchGroupViewModel}">
+        <sgv:TitleSearchGroupView/>
+    </DataTemplate>
+
+    <DataTemplate DataType="{x:Type sgvm:CompanySearchGroupViewModel}">
+        <sgv:CompanySearchGroupView/>
+    </DataTemplate>
+
+    <DataTemplate DataType="{x:Type sgvm:TagSearchGroupViewModel}">
+        <sgv:TagSearchGroupView/>
+    </DataTemplate>
+
+    <DataTemplate DataType="{x:Type sgvm:OtherSearchGroupViewModel}">
+        <sgv:OtherSearchGroupView/>
+    </DataTemplate>
+    
+</ResourceDictionary>
