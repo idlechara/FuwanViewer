@@ -207,6 +207,9 @@ namespace FuwanViewer.Repository.Cache
                 return true;
 
             // Request last modified from Fuwanovel, return true if NOT modified.
+            if (key.Scheme != Uri.UriSchemeHttp)
+                return false;
+
             HttpWebRequest request = WebRequest.CreateHttp(key);
             request.Method = "HEAD";
             request.Timeout = 5000;

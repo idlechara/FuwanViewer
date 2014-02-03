@@ -10,25 +10,27 @@ using System.Windows.Threading;
 
 namespace FuwanViewer.Presentation
 {
-    // Class was copied from http://stackoverflow.com/questions/7346663/how-to-show-a-waitcursor-when-the-wpf-application-is-busy-databinding
-    // and is the clearest way I can think of to change cursor, while still using MVVM pattern
-
     /// <summary>
-    /// Contains helper methods for UI, so far just one for showing a waitcursor
+    /// Contains helper methods for UI, so far just one for showing a waitcursor.
     /// </summary>
+    /// <remarks>
+    /// Setting busy state n-times require at least n calls to clear busy state to work properly, after
+    /// which cursor will go back to normal as soon as application is in idle state.
+    /// </remarks>
     public static class UiServices
     {
-        /// <summary>
-        /// A value indicating whether the UI is currently busy
-        /// </summary>
-        private static bool IsBusy;
+        private static int _busyCount;
 
         /// <summary>
         /// Sets cursor to 'Wait' until ClearBusyState is called
         /// </summary>
         public static void SetBusyState()
         {
-            SetBusyState(true);
+            _busyCount++;
+            if (_busyCount == 1)
+            {
+                Mouse.OverrideCursor = Cursors.Wait;
+            }
         }
 
         /// <summary>
@@ -40,20 +42,7 @@ namespace FuwanViewer.Presentation
         }
 
         /// <summary>
-        /// Sets the busystate to busy or not busy.
-        /// </summary>
-        /// <param name="busy">if set to <c>true</c> the application is now busy.</param>
-        private static void SetBusyState(bool busy)
-        {
-            if (busy != IsBusy)
-            {
-                IsBusy = busy;
-                Mouse.OverrideCursor = busy ? Cursors.Wait : null;
-            }
-        }
-
-        /// <summary>
-        /// Handles the Tick event of the dispatcherTimer control to restore old cursor.
+        /// Handles the Tick event of the dispatcherTimer control to restore old cursor, if approperiate.
         /// </summary>
         /// <param name="sender">The source of the event.</param>
         /// <param name="e">The <see cref="System.EventArgs"/> instance containing the event data.</param>
@@ -62,7 +51,12 @@ namespace FuwanViewer.Presentation
             var dispatcherTimer = sender as DispatcherTimer;
             if (dispatcherTimer != null)
             {
-                SetBusyState(false);
+                if (_busyCount > 0)
+                    _busyCount--;
+
+                if (_busyCount == 0)
+                    Mouse.OverrideCursor = Cursors.Arrow;
+
                 dispatcherTimer.Stop();
             }
         }

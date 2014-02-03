@@ -57,7 +57,11 @@ namespace FuwanViewer.Presentation.ViewModels
                 FuwanViewer.Presentation.Properties.Settings.Default.FuwaUsername = Username;
                 FuwanViewer.Presentation.Properties.Settings.Default.FuwaPassword = Password;
                 FuwanViewer.Presentation.Properties.Settings.Default.Save();
-                
+
+                var vnService = Application.Current.Properties["VisualNovelService"] as IVisualNovelService;
+                vnService.FuwaUsername = Username;
+                vnService.FuwaPassword = Password;
+
                 if (_loggedInCallback != null)
                     _loggedInCallback();
             }

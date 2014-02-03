@@ -30,14 +30,16 @@ namespace FuwanViewer.Presentation
             base.OnStartup(e);
             this.MainWindow = new MainWindow();
 
-            bool isFakeMode = FuwanViewer.Presentation.Properties.Settings.Default.FakeMode;
+            var settings = FuwanViewer.Presentation.Properties.Settings.Default;
+            bool isFakeMode = settings.FakeMode;
             string filePath = GetFilePathForService(isFakeMode);
+            FileMode fileMode = settings.RestoreServices == true ? FileMode.OpenOrCreate : FileMode.Create;
 
             // Attempt to restore VisualNovelService from isolated storage,
             // in order to use previous session's cache. (Image and API)
             IsolatedStorageFile f = IsolatedStorageFile.GetUserStoreForAssembly();
             VisualNovelService vnService;
-            using (IsolatedStorageFileStream stream = new IsolatedStorageFileStream(filePath, FileMode.Create, f))
+            using (IsolatedStorageFileStream stream = new IsolatedStorageFileStream(filePath, fileMode, f))
             {
                 if (stream.Length > 0)
                 {

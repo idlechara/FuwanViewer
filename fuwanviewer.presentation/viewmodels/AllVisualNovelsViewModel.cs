@@ -67,7 +67,11 @@ namespace FuwanViewer.Presentation.ViewModels
             this._visualNovels = new List<VisualNovel>();
             this._allNovels = CollectionViewSource.GetDefaultView(_visualNovels);
             this._visualNovelPreview = new VisualNovelPreviewViewModel(AllNovels.CurrentItem as VisualNovel);
-            this.OpenVisualNovelCommand = new RelayCommand((param) => openVisualNovel(param as VisualNovel));
+            this.OpenVisualNovelCommand = new RelayCommand((param) => 
+                {
+                    if (param != null)
+                        openVisualNovel(param as VisualNovel);   
+                });
 
             this._allNovels.CurrentChanged += SetPreviewNovel;
             this.Refresh();

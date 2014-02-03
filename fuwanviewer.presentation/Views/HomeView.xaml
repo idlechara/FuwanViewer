@@ -133,7 +133,7 @@
                     Command="{Binding OpenAllNovelsCommand}"
                     >
                 <Button.Background>
-                    <ImageBrush ImageSource="C:\Users\Kynku\Desktop\FuwanViewer\FuwanViewer.Presentation\Images\ShowAllNovels.png"></ImageBrush>
+                    <ImageBrush ImageSource="pack://application:,,,/FuwanViewer.Presentation;component/Images/ShowAllNovels.png"></ImageBrush>
                 </Button.Background>
             </Button>
 
@@ -141,7 +141,7 @@
                     Command="{Binding OpenFeaturedNovelsCommand}"
                     >
                 <Button.Background>
-                    <ImageBrush ImageSource="C:\Users\Kynku\Desktop\FuwanViewer\FuwanViewer.Presentation\Images\ShowFeatured.png"></ImageBrush>
+                    <ImageBrush ImageSource="pack://application:,,,/FuwanViewer.Presentation;component/Images/ShowFeatured.png"></ImageBrush>
                 </Button.Background>
             </Button>
         </Grid>

@@ -21,10 +21,10 @@
     </UserControl.Resources>
 
     <StackPanel>
-        <TextBox 
+        <TextBlock
             Padding="10"
             TextWrapping="Wrap"
-            Text="Caching enables Fuwanviewer to save images and novel information directly on your computer, so that next time they are referenced they don't have to be downloaded"/>
+            Text="Caching enables Fuwanviewer to save images (screens/covers) directly on your computer, so that next time they are referenced they don't have to be downloaded"/>
         <GroupBox>
             <GroupBox.Header>
                 <CheckBox x:Name="ckbEnableCaching" Content="Enable Caching" IsChecked="{Binding EnableCaching}" />

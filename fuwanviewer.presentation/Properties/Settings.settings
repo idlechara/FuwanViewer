@@ -2,11 +2,14 @@
 <SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="FuwanViewer.Presentation.Properties" GeneratedClassName="Settings">
   <Profiles />
   <Settings>
-    <Setting Name="CacheDirectory" Type="System.String" Scope="User">
-      <Value Profile="(Default)" />
-    </Setting>
     <Setting Name="FakeMode" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">False</Value>
+    </Setting>
+    <Setting Name="RestoreServices" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">True</Value>
+    </Setting>
+    <Setting Name="CacheDirectory" Type="System.String" Scope="User">
+      <Value Profile="(Default)" />
     </Setting>
     <Setting Name="CacheImages" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">True</Value>
@@ -24,7 +27,7 @@
       <Value Profile="(Default)" />
     </Setting>
     <Setting Name="OnStartupAction" Type="FuwanViewer.Presentation.OnStartupAction" Scope="User">
-      <Value Profile="(Default)">1</Value>
+      <Value Profile="(Default)">OpenAllNovels</Value>
     </Setting>
   </Settings>
 </SettingsFile>

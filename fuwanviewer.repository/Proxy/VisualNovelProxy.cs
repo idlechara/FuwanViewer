@@ -73,9 +73,9 @@ namespace FuwanViewer.Repository.Proxy
         {
             get
             {
-                List<ResourceType> screenshootResources = ResourceTypeFactory.GetScreenshootResources();
+                IEnumerable<ResourceType> screenshoots = ResourceTypeFactory.GetScreenshootResources().Intersect(_resourceUris.Keys);
 
-                foreach (ResourceType screenshoot in screenshootResources)
+                foreach (ResourceType screenshoot in screenshoots)
                 {
                     if (_haveLoaded.ContainsKey(screenshoot) && _haveLoaded[screenshoot] == false)
                     {
@@ -84,7 +84,7 @@ namespace FuwanViewer.Repository.Proxy
                 }
 
                 List<BitmapImage> result = new List<BitmapImage>();
-                foreach (ResourceType screenshoot in screenshootResources)
+                foreach (ResourceType screenshoot in screenshoots)
                 {
                     result.Add(_resourceImages[screenshoot]);
                 }
