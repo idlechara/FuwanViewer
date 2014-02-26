@@ -1,28 +1,8 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:vm="clr-namespace:FuwanViewer.Presentation.ViewModels"
-                    xmlns:stubs="clr-namespace:FuwanViewer.Presentation.SampleData.Stubs"
                     xmlns:view="clr-namespace:FuwanViewer.Presentation.Views">
-
-    <!--    DESIGN TIME SUPPORT     -->
-    <stubs:StubMainWindowViewModel x:Key="DesignTimeDataContext"/>
-
-    <DataTemplate DataType="{x:Type stubs:StubAllVisualNovelsViewModel}">
-        <view:AllVisualNovelsView/>
-    </DataTemplate>
-
-    <DataTemplate DataType="{x:Type stubs:StubSearchPanelViewModel}">
-        <view:SearchPanelView/>
-    </DataTemplate>
-
-    <DataTemplate DataType="{x:Type stubs:StubFeaturedVisualNovelsViewModel}">
-        <view:FeaturedVisualNovelsView/>
-    </DataTemplate>
-
-    <DataTemplate DataType="{x:Type stubs:StubHomeWorkspaceViewModel}">
-        <view:HomeView/>
-    </DataTemplate>
-
+    
     <!--    DATA TEMPLATES   -->
     <DataTemplate DataType="{x:Type vm:AllVisualNovelsViewModel}">
         <view:AllVisualNovelsView />

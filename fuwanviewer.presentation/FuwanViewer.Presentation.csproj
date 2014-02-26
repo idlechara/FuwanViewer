@@ -13,7 +13,6 @@
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <WarningLevel>4</WarningLevel>
-    <ExpressionBlendVersion>5.0.40218.0</ExpressionBlendVersion>
     <IsWebBootstrapper>false</IsWebBootstrapper>
     <PublishUrl>C:\Users\Magda\Desktop\</PublishUrl>
     <Install>true</Install>
@@ -61,7 +60,7 @@
     <GenerateManifests>true</GenerateManifests>
   </PropertyGroup>
   <PropertyGroup>
-    <SignManifests>true</SignManifests>
+    <SignManifests>false</SignManifests>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
@@ -94,18 +93,7 @@
     <Compile Include="EventBehaviours\GridBehaviours.cs" />
     <Compile Include="EventBehaviours\WindowBehaviours.cs" />
     <Compile Include="HistoryList.cs" />
-    <Compile Include="SampleData\Stubs\StubControlPanelViewModel.cs" />
-    <Compile Include="SampleData\Stubs\StubFeaturedVisualNovelsViewModel.cs" />
-    <Compile Include="SampleData\Stubs\StubHomeWorkspaceViewModel.cs" />
-    <Compile Include="SampleData\Stubs\StubScreenshotViewModel.cs" />
-    <Compile Include="SampleData\Stubs\StubVisualNovelWidgetViewModel.cs" />
-    <Compile Include="SampleData\Stubs\StubAllVisualNovelsViewModel.cs" />
-    <Compile Include="SampleData\Stubs\StubMainWindowViewModel.cs" />
-    <Compile Include="SampleData\Stubs\StubSearchPanelViewModel.cs" />
-    <Compile Include="SampleData\Stubs\StubTagSearchGroupViewModel.cs" />
-    <Compile Include="SampleData\Stubs\StubVisualNovel.cs" />
-    <Compile Include="SampleData\Stubs\StubVisualNovelPreviewViewModel.cs" />
-    <Compile Include="SampleData\Stubs\StubVisualNovelViewModel.cs" />
+    <Compile Include="SampleData\ViewModels\StubLoginViewModel.cs" />
     <Compile Include="ValueConverters\BoolToStringConverter.cs" />
     <Compile Include="ValueConverters\BoolToVisibilityConverter.cs" />
     <Compile Include="ValueConverters\BytesToStringConverter.cs" />
@@ -281,6 +269,43 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
+    <Resource Include="Images\fuwan-logo.png" />
+    <Resource Include="Images\cogwheel_button.png" />
+    <Resource Include="Images\refresh_button.png" />
+    <Resource Include="Images\pin_button.png" />
+    <Resource Include="Images\LoadingImage.jpg" />
+    <Resource Include="Images\Progress.gif" />
+    <Resource Include="Images\body-bg.png" />
+    <Resource Include="Images\site-logo.png" />
+    <Resource Include="Images\add_button.png" />
+    <Resource Include="Images\home_background.jpg" />
+    <Resource Include="Images\ShowAllNovels.png" />
+    <Resource Include="Images\ShowFeatured.png" />
+  </ItemGroup>
+  <!-- Sample data and Design time support -->
+  <ItemGroup Condition="'$(Configuration)' == 'DEBUG'">
+    <Resource Include="SampleData\Images\EfMainArt.jpg" />
+    <Resource Include="SampleData\Images\Ef0.jpg" />
+    <Resource Include="SampleData\Images\Ef1.jpg" />
+    <Resource Include="SampleData\Images\Ef2.jpg" />
+    <Resource Include="SampleData\Images\Ef3.jpg" />
+    <Resource Include="SampleData\Images\Ef4.jpg" />
+    <Resource Include="SampleData\Images\Ef5.jpg" />
+    <Resource Include="SampleData\Images\Ef6.jpg" />
+    <Resource Include="SampleData\Images\Ef7.jpg" />
+    <Resource Include="SampleData\Images\Ef8.jpg" />
+    <Compile Include="SampleData\Other\StubVisualNovel.cs" />
+    <Compile Include="SampleData\Other\StubVisualNovelService.cs" />
+    <Compile Include="SampleData\ViewModels\StubAllVisualNovelsViewModel.cs" />
+    <Compile Include="SampleData\ViewModels\StubControlPanelViewModel.cs" />
+    <Compile Include="SampleData\ViewModels\StubFeaturedVisualNovelsViewModel.cs" />
+    <Compile Include="SampleData\ViewModels\StubHomeWorkspaceViewModel.cs" />
+    <Compile Include="SampleData\ViewModels\StubMainWindowViewModel.cs" />
+    <Compile Include="SampleData\ViewModels\StubVisualNovelPreviewViewModel.cs" />
+    <Compile Include="SampleData\ViewModels\StubVisualNovelViewModel.cs" />
+    <Compile Include="SampleData\ViewModels\StubVisualNovelWidgetViewModel.cs" />
+  </ItemGroup>
+  <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -304,8 +329,6 @@
       <SubType>Designer</SubType>
     </None>
     <AppDesigner Include="Properties\" />
-    <Resource Include="Resources\Fonts\LeagueGothic.otf" />
-    <Resource Include="Resources\Fonts\TikalSans.otf" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
@@ -319,7 +342,7 @@
       <Project>{d387f9f0-4e36-450f-bb11-ce82ab904de5}</Project>
       <Name>FuwanViewer.Model</Name>
     </ProjectReference>
-    <ProjectReference Include="..\FuwanViewer.Repository.Fake\FuwanViewer.Repository.Fake.csproj">
+    <ProjectReference Condition="'$(Configuration)' == 'DEBUG'" Include="..\FuwanViewer.Repository.Fake\FuwanViewer.Repository.Fake.csproj">
       <Project>{717c79c3-d615-48c9-93c4-adab4b268333}</Project>
       <Name>FuwanViewer.Repository.Fake</Name>
     </ProjectReference>
@@ -331,54 +354,6 @@
       <Project>{aadec5e7-5896-4a4c-ae67-9baced1098ee}</Project>
       <Name>FuwanViewer.Services</Name>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Images\fuwan-logo.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Images\cogwheel_button.png" />
-    <Resource Include="Images\refresh_button.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Images\pin_button.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="SampleData\Images\EfMainArt.jpg" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Images\LoadingImage.jpg" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="SampleData\Images\Ef0.jpg" />
-    <Resource Include="SampleData\Images\Ef1.jpg" />
-    <Resource Include="SampleData\Images\Ef2.jpg" />
-    <Resource Include="SampleData\Images\Ef3.jpg" />
-    <Resource Include="SampleData\Images\Ef4.jpg" />
-    <Resource Include="SampleData\Images\Ef5.jpg" />
-    <Resource Include="SampleData\Images\Ef6.jpg" />
-    <Resource Include="SampleData\Images\Ef7.jpg" />
-    <Resource Include="SampleData\Images\Ef8.jpg" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Images\Progress.gif" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Images\body-bg.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Images\site-logo.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Images\add_button.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Images\home_background.jpg" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Images\ShowAllNovels.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Images\ShowFeatured.png" />
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include=".NETFramework,Version=v4.5">

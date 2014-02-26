@@ -16,7 +16,6 @@ using FuwanViewer.Model.VisualNovels;
 using FuwanViewer.Presentation.ViewModels.Abstract;
 using FuwanViewer.Presentation.Views;
 using FuwanViewer.Repository;
-using FuwanViewer.Repository.Fake;
 using FuwanViewer.Services.Interfaces;
 
 namespace FuwanViewer.Presentation.ViewModels

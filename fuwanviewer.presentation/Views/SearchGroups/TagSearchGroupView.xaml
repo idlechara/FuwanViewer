@@ -1,15 +1,14 @@
-﻿<UserControl
+﻿<UserControl x:Class="FuwanViewer.Presentation.Views.SearchGroups.TagSearchGroupView" 
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:Stubs="clr-namespace:FuwanViewer.Presentation.SampleData.Stubs" x:Class="FuwanViewer.Presentation.Views.SearchGroups.TagSearchGroupView" 
+             xmlns:sgvm="clr-namespace:FuwanViewer.Presentation.ViewModels.SearchGroups"
              mc:Ignorable="d" 
-             d:DesignHeight="300" d:DesignWidth="200">
+             d:DesignHeight="300" d:DesignWidth="200"
+             d:DataContext="{d:DesignInstance Type={x:Type sgvm:TagSearchGroupViewModel}, IsDesignTimeCreatable=True}">
     
     <UserControl.Resources>
-        <Stubs:StubTagSearchGroupViewModel  x:Key="DesignTimeDataContext"/>
-
         <Style x:Key="CuteCheckBox" TargetType="{x:Type CheckBox}">
             <Setter Property="SnapsToDevicePixels" Value="true"/>
             <Setter Property="FocusVisualStyle" Value="{DynamicResource CheckBoxFocusVisual}"/>
@@ -69,7 +68,7 @@
         </Style>
     </UserControl.Resources>
     
-    <Grid d:DataContext="{StaticResource DesignTimeDataContext}">
+    <Grid>
 
         <GroupBox Header="Tags">
             <ItemsControl ItemsSource="{Binding Pairs}">

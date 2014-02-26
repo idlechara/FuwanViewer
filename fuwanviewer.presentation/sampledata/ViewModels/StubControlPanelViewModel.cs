@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using FuwanViewer.Presentation.ViewModels;
 using FuwanViewer.Presentation.ViewModels.Abstract;
 
-namespace FuwanViewer.Presentation.SampleData.Stubs
+namespace FuwanViewer.Presentation.ViewModels
 {
     public class StubControlPanelViewModel : ControlPanelViewModel 
     {

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using System.Windows.Media.Imaging;
 using FuwanViewer.Model.VisualNovels;
 
-namespace FuwanViewer.Presentation.SampleData.Stubs
+namespace FuwanViewer.Presentation.SampleData.Other
 {
     public class StubVisualNovel : VisualNovel
     {

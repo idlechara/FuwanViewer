@@ -3,14 +3,13 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:vm="clr-namespace:FuwanViewer.Presentation.ViewModels"
              xmlns:converters="clr-namespace:FuwanViewer.Presentation.ValueConverters"
-             xmlns:stubs="clr-namespace:FuwanViewer.Presentation.SampleData.Stubs"
              mc:Ignorable="d"
-             d:DesignHeight="150" d:DesignWidth="500">
+             d:DesignHeight="150" d:DesignWidth="500" 
+             d:DataContext="{d:DesignInstance Type={x:Type vm:StubVisualNovelPreviewViewModel}, IsDesignTimeCreatable=True}">
     
     <UserControl.Resources>
-        <stubs:StubVisualNovelPreviewViewModel x:Key="DesignTimeDataContext" />
-
         <converters:TagListToStringConverter x:Key="myCollectionToStringConverter"/>
 
         <Style x:Key="Title" TargetType="TextBlock">
@@ -32,23 +31,7 @@
         </Style>
     </UserControl.Resources>
     <Grid>
-
-        <!--<Image  Grid.Row="0" Grid.Column="0" Source="{Binding Path=MainArt}" Stretch="UniformToFill">
-            <Image.Effect>
-                <BlurEffect RenderingBias="Quality"/>
-            </Image.Effect>
-            <Image.OpacityMask>
-                <LinearGradientBrush StartPoint="0,0.5" EndPoint="0,0">
-                    <GradientStop Color="Black" Offset="1"/>
-                    <GradientStop Color="#7C000000"/>
-                </LinearGradientBrush>
-            </Image.OpacityMask>
-        </Image>-->
-
-        <DockPanel Grid.Column="0" Grid.Row="0" d:DataContext="{StaticResource DesignTimeDataContext}">
-            
-            
-            
+        <DockPanel Grid.Column="0" Grid.Row="0">  
             <Border  Margin="10" BorderThickness="2" BorderBrush="#FFFFFFFF">
                 <Image DockPanel.Dock="Left" Source="{Binding Cover}" RenderOptions.BitmapScalingMode="HighQuality"/>
             </Border>

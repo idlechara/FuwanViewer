@@ -22,10 +22,12 @@ namespace FuwanViewer.Services
     /// of VisualNovels.
     /// </summary>
     [DataContract]
+#if DEBUG
     [KnownType(typeof(FakeFuwaVNRepository))]
+    [KnownType(typeof(FakeVisualNovelProxy))]
+#endif
     [KnownType(typeof(FuwaVNRepository))]
     [KnownType(typeof(VisualNovelProxy))]
-    [KnownType(typeof(FakeVisualNovelProxy))]
     public class VisualNovelService : IVisualNovelService
     {
         #region Fields and Properties

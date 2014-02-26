@@ -23,6 +23,7 @@ namespace FuwanViewer.Presentation.ViewModels
     {
         #region Fields and Properties
 
+        IVisualNovelService _vnService;
         VisualNovelPreviewViewModel _visualNovelPreview;
         List<VisualNovel> _visualNovels;
         ICollectionView _allNovels;
@@ -66,6 +67,7 @@ namespace FuwanViewer.Presentation.ViewModels
             base.DisplayName = "All novels";
             this._visualNovels = new List<VisualNovel>();
             this._allNovels = CollectionViewSource.GetDefaultView(_visualNovels);
+            this._vnService = vnService;
             this._visualNovelPreview = new VisualNovelPreviewViewModel(AllNovels.CurrentItem as VisualNovel);
             this.OpenVisualNovelCommand = new RelayCommand((param) => 
                 {
@@ -92,8 +94,7 @@ namespace FuwanViewer.Presentation.ViewModels
         {
             UiServices.SetBusyState();
 
-            var vnService = Application.Current.Properties["VisualNovelService"] as IVisualNovelService;
-            var freshNovels = await Task<List<VisualNovel>>.Run(() => vnService.GetAllVisualNovels());
+            var freshNovels = await Task<List<VisualNovel>>.Run(() => _vnService.GetAllVisualNovels());
             _visualNovels.Clear();
             _visualNovels.AddRange(freshNovels);
             AllNovels.Refresh();

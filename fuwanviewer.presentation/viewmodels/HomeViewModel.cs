@@ -45,31 +45,6 @@ namespace FuwanViewer.Presentation.ViewModels
 
         void UpdateWidgetCollection(object sender, NotifyCollectionChangedEventArgs e)
         {
-            //if (e.Action == NotifyCollectionChangedAction.Move)
-            //{
-            //    RecentlyViewedNovels.Move(e.OldStartingIndex, e.NewStartingIndex);
-            //    return;
-            //}
-
-            //if (e.NewItems.Count > 0)
-            //{
-            //    foreach (var item in e.NewItems)
-            //    {
-            //        RecentlyViewedNovels.Add(
-            //            new VisualNovelWidgetViewModel(
-            //                item as VisualNovel,
-            //                (vn) => OpenVisualNovelCommand.Execute(vn)));
-            //    }
-            //}
-            //if (e.OldItems != null && e.OldItems.Count > 0)
-            //{
-            //    var oldNovels = e.OldItems.Cast<VisualNovel>();
-            //    var itemsToRemove = RecentlyViewedNovels.Where((vnw) => oldNovels.Contains(vnw._novel));
-            //    foreach (var item in itemsToRemove)
-            //    {
-            //        RecentlyViewedNovels.Remove(item);
-            //    }
-            //}
             OnPropertyChanged("RecentlyViewedNovels");
         }
     }

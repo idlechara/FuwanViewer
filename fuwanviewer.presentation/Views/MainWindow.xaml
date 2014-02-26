@@ -4,12 +4,12 @@
         Title="{Binding DisplayName}" Height="600" Width="900"
         MinHeight="600" MinWidth="900"
         xmlns:vm="clr-namespace:FuwanViewer.Presentation.ViewModels"
+        xmlns:behav="clr-namespace:FuwanViewer.Presentation.EventBehaviours"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-        xmlns:behav="clr-namespace:FuwanViewer.Presentation.EventBehaviours"
-        xmlns:stubs="clr-namespace:FuwanViewer.Presentation.SampleData.Stubs"
+        mc:Ignorable="d"
         behav:WindowBehaviours.ClosingCommand="{Binding ClosingCommand}"
-        mc:Ignorable="d">
+        d:DataContext="{d:DesignInstance Type={x:Type vm:StubMainWindowViewModel}, IsDesignTimeCreatable=True}">
     
     <Window.Resources>
         <ResourceDictionary Source="Resources/MainWindowResources.xaml"/>
@@ -19,7 +19,7 @@
         <ImageBrush ImageSource="..\Images\body-bg.png" Opacity="1"></ImageBrush>
     </Window.Background>
     
-    <DockPanel d:DataContext="{StaticResource DesignTimeDataContext}">
+    <DockPanel>
         <ContentControl
             Height="auto"
             DockPanel.Dock="Top"

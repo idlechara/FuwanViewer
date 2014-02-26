@@ -23,9 +23,12 @@ namespace FuwanViewer.Presentation.ViewModels
     {
         #region Fields and Properties
 
+        IVisualNovelService _vnService;
         Action<VisualNovel> _openVisualNovel;
-        public List<VisualNovelWidgetViewModel> FeaturedNovels { get; set; }
-       
+        List<VisualNovelWidgetViewModel> _visualNovels { get; set; }
+
+        public ICollectionView FeaturedNovels { get; private set; }
+
         #endregion // Fields and Properties
 
         #region Constructors
@@ -38,8 +41,10 @@ namespace FuwanViewer.Presentation.ViewModels
         {
             // initialize members
             base.DisplayName = "Featured";
-            this.FeaturedNovels = new List<VisualNovelWidgetViewModel>();
+            this._visualNovels = new List<VisualNovelWidgetViewModel>();
             this._openVisualNovel = openVisualNovel;
+            this._vnService = vnService;
+            this.FeaturedNovels = CollectionViewSource.GetDefaultView(_visualNovels);
 
             // Refresh to get Visual Novels
             this.Refresh();
@@ -51,15 +56,14 @@ namespace FuwanViewer.Presentation.ViewModels
         {
             UiServices.SetBusyState();
 
-            var vnService = Application.Current.Properties["VisualNovelService"] as IVisualNovelService;
-            var freshNovels = await Task<List<VisualNovel>>.Run(() => vnService.GetFeaturedNovels());
-            FeaturedNovels.Clear();
-            FeaturedNovels.AddRange(freshNovels.ToList().ConvertAll(
+            var freshNovels = await Task<List<VisualNovel>>.Run(() => _vnService.GetFeaturedNovels());
+            _visualNovels.Clear();
+            _visualNovels.AddRange(freshNovels.ToList().ConvertAll(
                 delegate (VisualNovel vn) 
                 {
                     return new VisualNovelWidgetViewModel(vn, _openVisualNovel);
                 }));
-            OnPropertyChanged("FeaturedNovels");
+            FeaturedNovels.Refresh();
 
             UiServices.ClearBusyState();
         }

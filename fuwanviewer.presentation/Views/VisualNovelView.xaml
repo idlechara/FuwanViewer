@@ -5,17 +5,16 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:eventbehav="clr-namespace:FuwanViewer.Presentation.EventBehaviours"
              xmlns:converters="clr-namespace:FuwanViewer.Presentation.ValueConverters"
-             xmlns:stubs="clr-namespace:FuwanViewer.Presentation.SampleData.Stubs"
              xmlns:controls="clr-namespace:FuwanViewer.Presentation.Views"
-             mc:Ignorable="d" 
-             d:DesignHeight="1688" d:DesignWidth="1003">
+             xmlns:vm="clr-namespace:FuwanViewer.Presentation.ViewModels"
+             mc:Ignorable="d"
+             d:DesignHeight="1688" d:DesignWidth="1003"
+             d:DataContext="{d:DesignInstance Type={x:Type vm:StubVisualNovelViewModel}, IsDesignTimeCreatable=True}">
 
     <UserControl.Resources>
         <converters:TagListToStringConverter x:Key="myCollectionToStringConverter"/>
         <converters:BoolToStringConverter x:Key="boolToStringConverter"/>
         <converters:BytesToStringConverter x:Key="byteToStringConverter"/>
-
-        <stubs:StubVisualNovelViewModel x:Key="DesignTimeDataContext" />
 
         <Style x:Key="TorrentHiding" TargetType="StackPanel">
             <Style.Triggers>
@@ -122,7 +121,7 @@
 
     <ScrollViewer Style="{StaticResource DefaultFont}">
         <!-- Main stack -->
-        <StackPanel d:DataContext="{StaticResource DesignTimeDataContext}" Orientation="Vertical"  MaxWidth="700">
+        <StackPanel Orientation="Vertical"  MaxWidth="700">
 
             <Image Name="MainArt"  Source="{Binding Path=MainArt}" Height="auto" Margin="5"></Image>
 

@@ -7,19 +7,14 @@
              xmlns:v="clr-namespace:FuwanViewer.Presentation.Views"
              xmlns:eventbehav="clr-namespace:FuwanViewer.Presentation.EventBehaviours"
              xmlns:converters="clr-namespace:FuwanViewer.Presentation.ValueConverters"
-             xmlns:stubs="clr-namespace:FuwanViewer.Presentation.SampleData.Stubs"
              mc:Ignorable="d" 
-             d:DesignHeight="400" d:DesignWidth="1000">
+             d:DesignHeight="400" d:DesignWidth="1000"
+             d:DataContext="{d:DesignInstance Type={x:Type vm:StubAllVisualNovelsViewModel}, IsDesignTimeCreatable=True}">
     
     <UserControl.Resources>     
         <converters:TagListToStringConverter x:Key="myCollectionToStringConverter"/>
 
-        <stubs:StubAllVisualNovelsViewModel x:Key="DesignTimeDataContext"/>
-
         <DataTemplate DataType="{x:Type vm:VisualNovelPreviewViewModel}">
-            <v:VisualNovelPreviewView />
-        </DataTemplate>
-        <DataTemplate DataType="{x:Type stubs:StubVisualNovelPreviewViewModel}">
             <v:VisualNovelPreviewView />
         </DataTemplate>
     </UserControl.Resources>
@@ -28,7 +23,7 @@
         <SolidColorBrush Color="Transparent"></SolidColorBrush>
     </UserControl.Background>
 
-    <Grid d:DataContext="{StaticResource DesignTimeDataContext}" Background="Transparent">
+    <Grid Background="Transparent">
         <Grid.RowDefinitions>
             <RowDefinition Height="2*"/>
             <RowDefinition Height="5"/>

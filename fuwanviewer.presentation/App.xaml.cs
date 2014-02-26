@@ -12,7 +12,6 @@ using System.Windows;
 using FuwanViewer.Model;
 using FuwanViewer.Presentation.ViewModels;
 using FuwanViewer.Repository;
-using FuwanViewer.Repository.Fake;
 using FuwanViewer.Services;
 using System.Reflection;
 using System.Text;
@@ -30,16 +29,12 @@ namespace FuwanViewer.Presentation
             base.OnStartup(e);
             this.MainWindow = new MainWindow();
 
-            var settings = FuwanViewer.Presentation.Properties.Settings.Default;
-            bool isFakeMode = settings.FakeMode;
-            string filePath = GetFilePathForService(isFakeMode);
-            FileMode fileMode = settings.RestoreServices == true ? FileMode.OpenOrCreate : FileMode.Create;
-
             // Attempt to restore VisualNovelService from isolated storage,
             // in order to use previous session's cache. (Image and API)
+            string filePath = GetFilePathForService();
             IsolatedStorageFile f = IsolatedStorageFile.GetUserStoreForAssembly();
             VisualNovelService vnService;
-            using (IsolatedStorageFileStream stream = new IsolatedStorageFileStream(filePath, fileMode, f))
+            using (IsolatedStorageFileStream stream = new IsolatedStorageFileStream(filePath, FileMode.OpenOrCreate, f))
             {
                 if (stream.Length > 0)
                 {
@@ -50,14 +45,14 @@ namespace FuwanViewer.Presentation
                     }
                     catch (SerializationException)
                     {
-                        vnService = VisualNovelServiceFactory.Create(isFakeMode);
+                        vnService = CreateVisualNovelService();
                         InitializeServiceProperties(vnService);
                     }
                 }
                 // if failed to restore service, create a new one with application settings.
                 else
                 {
-                    vnService = VisualNovelServiceFactory.Create(isFakeMode);
+                    vnService = CreateVisualNovelService();
                     InitializeServiceProperties(vnService);
                 }
             }
@@ -80,9 +75,7 @@ namespace FuwanViewer.Presentation
             base.OnExit(e);
 
             // Store the VisualNovelService (overwrite the old one)
-            bool isFakeMode = FuwanViewer.Presentation.Properties.Settings.Default.FakeMode;
-            string filePath = GetFilePathForService(isFakeMode);
-            
+            string filePath = GetFilePathForService();
             IsolatedStorageFile f = IsolatedStorageFile.GetUserStoreForAssembly();
             using (IsolatedStorageFileStream stream = new IsolatedStorageFileStream(filePath, FileMode.Create, f))
             {
@@ -109,12 +102,28 @@ namespace FuwanViewer.Presentation
             vnService.FuwaPassword = FuwanViewer.Presentation.Properties.Settings.Default.FuwaPassword;
         }
 
-        private string GetFilePathForService(bool isFakeMode)
+        private string GetFilePathForService()
         {
-            if (isFakeMode)
+#if DEBUG
+            if (FuwanViewer.Presentation.Properties.Settings.Default.FakeMode == true)
                 return "FakeModeFuwanViewerService";
             else
                 return "RealFuwanViewerService";
+#else
+            return "fuwanovel-vnservice";
+#endif
+        }
+
+        private VisualNovelService CreateVisualNovelService()
+        {
+#if DEBUG
+            if (FuwanViewer.Presentation.Properties.Settings.Default.FakeMode == true)
+                return new VisualNovelService(new FuwanViewer.Repository.Fake.FakeFuwaVNRepository());
+            else
+                return new VisualNovelService(new FuwaVNRepository());
+#else
+            return new VisualNovelService(new FuwaVNRepository());
+#endif
         }
 
         private string GetExeDirectoryPath()

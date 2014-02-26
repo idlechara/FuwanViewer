@@ -5,9 +5,6 @@
     <Setting Name="FakeMode" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">False</Value>
     </Setting>
-    <Setting Name="RestoreServices" Type="System.Boolean" Scope="User">
-      <Value Profile="(Default)">True</Value>
-    </Setting>
     <Setting Name="CacheDirectory" Type="System.String" Scope="User">
       <Value Profile="(Default)" />
     </Setting>

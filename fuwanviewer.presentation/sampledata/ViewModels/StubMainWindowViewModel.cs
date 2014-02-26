@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 using FuwanViewer.Presentation.ViewModels;
 using FuwanViewer.Presentation.ViewModels.Abstract;
 
-namespace FuwanViewer.Presentation.SampleData.Stubs
+namespace FuwanViewer.Presentation.ViewModels
 {
     public class StubMainWindowViewModel
     {
@@ -26,7 +26,7 @@ namespace FuwanViewer.Presentation.SampleData.Stubs
             Workspaces.Add(new StubVisualNovelViewModel());
 
             SidePanels = new ObservableCollection<SidePanelViewModel>();
-            SidePanels.Add(new StubSearchPanelViewModel());
+            SidePanels.Add(new SearchPanelViewModel());
 
             HiddenPanels = new ObservableCollection<SidePanelViewModel>();
 

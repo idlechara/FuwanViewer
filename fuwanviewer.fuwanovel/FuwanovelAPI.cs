@@ -110,7 +110,7 @@ namespace FuwanViewer.Fuwanovel
                     return response.LastModified;
                 }
             }
-            catch (WebException e)
+            catch (WebException)
             {
                 return default(DateTime);
             }

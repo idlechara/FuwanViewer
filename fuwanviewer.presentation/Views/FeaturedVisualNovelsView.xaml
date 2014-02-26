@@ -3,24 +3,18 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:stubs="clr-namespace:FuwanViewer.Presentation.SampleData.Stubs"
              xmlns:view="clr-namespace:FuwanViewer.Presentation.Views"
              xmlns:vm="clr-namespace:FuwanViewer.Presentation.ViewModels"
              mc:Ignorable="d" 
-             d:DesignHeight="300" d:DesignWidth="700">
+             d:DesignHeight="300" d:DesignWidth="700"
+             d:DataContext="{d:DesignInstance Type={x:Type vm:StubFeaturedVisualNovelsViewModel}, IsDesignTimeCreatable=True}">
     <UserControl.Resources>
-        <stubs:StubFeaturedVisualNovelsViewModel x:Key="DesignTimeDataContext"/>
-        
-        <DataTemplate DataType="{x:Type stubs:StubVisualNovelWidgetViewModel}">
-            <view:VisualNovelWidgetView Width="300" Height="150" Margin="10"/>
-        </DataTemplate>
-        
         <DataTemplate DataType="{x:Type vm:VisualNovelWidgetViewModel}">
             <view:VisualNovelWidgetView Width="300" Height="150" Margin="10"/>
         </DataTemplate>
     </UserControl.Resources>
     
-    <Grid d:DataContext="{StaticResource DesignTimeDataContext}">
+    <Grid>
         <ItemsControl ItemsSource="{Binding FeaturedNovels}">
             <ItemsControl.ItemsPanel>
                 <ItemsPanelTemplate>
