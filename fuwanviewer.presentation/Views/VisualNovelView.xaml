@@ -33,6 +33,8 @@
                 </Setter.Value>
             </Setter>
         </Style>
+
+        
         
         <Style x:Key="TorrentHiding" TargetType="StackPanel">
             <Style.Triggers>
@@ -41,6 +43,8 @@
                 </DataTrigger>
             </Style.Triggers>
         </Style>
+
+
 
         <Style x:Key="FaqHiding" TargetType="TextBlock">
             <Style.Triggers>
@@ -112,11 +116,11 @@
             Width="{Binding Path=ActualWidth, ElementName=VNV}" Height="{Binding Path=ActualHeight, ElementName=VNV}">
 
         <!-- The screenshot of ded -->
-        <ScrollViewer Width="{Binding Path=ActualWidth, ElementName=VNV}" Height="{Binding Path=ActualHeight, ElementName=VNV}" 
+        <ScrollViewer Width="{Binding Path=ActualWidth, ElementName=RenderingCanvas}" Height="{Binding Path=ActualHeight, ElementName=RenderingCanvas}" 
                       Opacity="1.0">
             <ScrollViewer.Style>
             <Style TargetType="ScrollViewer" BasedOn="{StaticResource DefaultFont}">
-                <Setter Property="Opacity" Value="1.0"></Setter>
+                <Setter Property="Opacity" Value="0.0"></Setter>
                 <Setter Property="Visibility" Value="Visible"></Setter>
 
                 <Style.Triggers>
@@ -151,8 +155,8 @@
                                     </DoubleAnimationUsingKeyFrames>
 
 
-                                    <ObjectAnimationUsingKeyFrames Duration="0:0:4" Storyboard.TargetProperty="(UIElement.Visibility)">
-                                        <DiscreteObjectKeyFrame KeyTime="0:0:4" Value="{x:Static Visibility.Hidden}"/>
+                                    <ObjectAnimationUsingKeyFrames Duration="0:0:.4" Storyboard.TargetProperty="(UIElement.Visibility)">
+                                        <DiscreteObjectKeyFrame KeyTime="0:0:.4" Value="{x:Static Visibility.Hidden}"/>
                                     </ObjectAnimationUsingKeyFrames>
                                 </Storyboard>
                             </BeginStoryboard>
@@ -164,7 +168,7 @@
             </ScrollViewer.Style>
 
             <!-- Main stack -->
-            <Grid>
+            <Grid Name="ScGrid1">
                 <Grid.RowDefinitions>
                     <RowDefinition></RowDefinition>
                     <RowDefinition Height="auto" ></RowDefinition>
@@ -176,20 +180,97 @@
                     <ColumnDefinition></ColumnDefinition>
                 </Grid.ColumnDefinitions>
 
-                <!-- a longer line plz-->
-                <Button Grid.Column="1" Grid.Row="1" Style="{StaticResource NoButtonBorder}" 
+
+                <Grid Grid.Column="1" Grid.Row="1" >
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="auto"></RowDefinition>
+                        <RowDefinition></RowDefinition>
+                        <RowDefinition Height="auto"></RowDefinition>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="auto"></ColumnDefinition>
+                        <ColumnDefinition ></ColumnDefinition>
+                        <ColumnDefinition  Width="auto"></ColumnDefinition>
+                    </Grid.ColumnDefinitions>
+                    <!-- a longer line plz-->
+
+
+                    <Button Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="3" Grid.RowSpan="3" Style="{StaticResource NoButtonBorder}"
+                            >
+                        <Image  Source="{Binding Path=CurrentScreenshot}"  
+                                MaxHeight="{Binding Path=ActualHeight, ElementName=RenderingCanvas}"
+                                MaxWidth="{Binding Path=ActualWidth, ElementName=RenderingCanvas}" StretchDirection="DownOnly"/>
+                    </Button>
+
+
+                    <Button Grid.Column="0" Grid.Row="1"  
+                                        Command="{Binding PrevScreenshotViewCommand}"
+                                        CommandParameter="{Binding}">
+                        <Button.Style>
+                            <Style TargetType="Button" BasedOn="{StaticResource NoButtonBorder}">
+                                    <Setter Property="Visibility" Value="Visible"></Setter>
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding ScreenshotModeEnabled}" Value="False">
+                                        <Setter Property="Visibility" Value="Hidden"/>
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                            </Style>
+                        </Button.Style>
+                        <TextBlock FontSize="60" Text="&lt;" Foreground="White">
+                            <TextBlock.Effect>
+                                <DropShadowEffect/>
+                            </TextBlock.Effect>
+                        </TextBlock>
+                    </Button>
+
+                    <Button Grid.Column="2" Grid.Row="1"
+                                        Command="{Binding NextScreenshotViewCommand}"
+                                        CommandParameter="{Binding}">
+
+                        <Button.Style>
+                            <Style TargetType="Button" BasedOn="{StaticResource NoButtonBorder}">
+                                <Setter Property="Visibility" Value="Visible"></Setter>
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding ScreenshotModeEnabled}" Value="False">
+                                        <Setter Property="Visibility" Value="Hidden"/>
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Button.Style>
+                        <TextBlock FontSize="60" Text="&gt;" Foreground="White">
+                            <TextBlock.Effect>
+                                <DropShadowEffect/>
+                            </TextBlock.Effect>
+                        </TextBlock>
+                    </Button>
+                    
+                    <Button Grid.Column="1" Grid.Row="3"
                                         Command="{Binding ToggleScreenshotViewCommand}"
                                         CommandParameter="{Binding}">
-                    <Image  Source="{Binding Path=CurrentScreenshot}" Width="auto" Height="auto">
-                    </Image>
-                </Button>
-                
 
+                        <Button.Style>
+                            <Style TargetType="Button" BasedOn="{StaticResource NoButtonBorder}">
+                                <Setter Property="Visibility" Value="Visible"></Setter>
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding ScreenshotModeEnabled}" Value="False">
+                                        <Setter Property="Visibility" Value="Hidden"/>
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Button.Style>
+                        
+                        <TextBlock FontSize="60" Text="Return" Foreground="White">
+                            <TextBlock.Effect>
+                                <DropShadowEffect/>
+                            </TextBlock.Effect>
+                        </TextBlock>
+                    </Button>
+                </Grid>
             </Grid>
         </ScrollViewer>
 
         <!-- The main view -->
-        <ScrollViewer Width="{Binding Path=ActualWidth, ElementName=VNV}" Height="{Binding Path=ActualHeight, ElementName=VNV}">
+        <ScrollViewer Width="{Binding Path=ActualWidth, ElementName=RenderingCanvas}" Height="{Binding Path=ActualHeight, ElementName=RenderingCanvas}">
             <ScrollViewer.Style>
                 <Style TargetType="ScrollViewer" BasedOn="{StaticResource DefaultFont}">
                     <Setter Property="Opacity" Value="0.0"></Setter>
@@ -227,8 +308,8 @@
                                         </DoubleAnimationUsingKeyFrames>
 
 
-                                        <ObjectAnimationUsingKeyFrames Duration="0:0:4" Storyboard.TargetProperty="(UIElement.Visibility)">
-                                            <DiscreteObjectKeyFrame KeyTime="0:0:4" Value="{x:Static Visibility.Hidden}"/>
+                                        <ObjectAnimationUsingKeyFrames Duration="0:0:.4" Storyboard.TargetProperty="(UIElement.Visibility)">
+                                            <DiscreteObjectKeyFrame KeyTime="0:0:.4" Value="{x:Static Visibility.Hidden}"/>
                                         </ObjectAnimationUsingKeyFrames>
                                     </Storyboard>
                                 </BeginStoryboard>

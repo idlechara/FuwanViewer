@@ -109,6 +109,8 @@ namespace FuwanViewer.Presentation.ViewModels
         public ICommand HandleRequestNavigateCommand { get; set; }
         public ICommand ImageLoadedCommand { get; set; }
         public ICommand ToggleScreenshotViewCommand { get; set; }
+        public ICommand PrevScreenshotViewCommand { get; set; }
+        public ICommand NextScreenshotViewCommand { get; set; }
 
         #endregion // Fields and Properties
 
@@ -122,6 +124,8 @@ namespace FuwanViewer.Presentation.ViewModels
             this.HandleRequestNavigateCommand = new RelayCommand(HandleRequestNavigate);
             this.ImageLoadedCommand = new RelayCommand(ImageLoaded);
             this.ToggleScreenshotViewCommand = new RelayCommand(ToggleScreenshotView);
+            this.NextScreenshotViewCommand = new RelayCommand(NextScreenshotView);
+            this.PrevScreenshotViewCommand = new RelayCommand(PrevScreenshotView);
         }
 
         #endregion // Constructors
@@ -149,6 +153,51 @@ namespace FuwanViewer.Presentation.ViewModels
             else
             {
                 CurrentScreenshot = null;
+            }
+        }
+
+        private void PrevScreenshotView(object param)
+        {
+            if (CurrentScreenshot != null)
+            {
+                int index = 0;
+
+                for(int i=0; i<Screenshoots.Count; i++){
+                    if (Screenshoots.ElementAt(i).UriSource.AbsoluteUri == CurrentScreenshot.UriSource.AbsoluteUri)
+                    {
+                        index = i;
+                        break;
+                    }
+                }
+
+                if (index > 0 && index < Screenshoots.Count)
+                {
+                    CurrentScreenshot = Screenshoots.ElementAt(index-1);
+                }
+
+            }
+        }
+
+        private void NextScreenshotView(object param)
+        {
+            if (CurrentScreenshot != null)
+            {
+                int index = 0;
+
+                for (int i = 0; i < Screenshoots.Count; i++)
+                {
+                    if (Screenshoots.ElementAt(i).UriSource.AbsoluteUri == CurrentScreenshot.UriSource.AbsoluteUri)
+                    {
+                        index = i;
+                        break;
+                    }
+                }
+
+                if (index >= 0 && index < Screenshoots.Count - 1)
+                {
+                    CurrentScreenshot = Screenshoots.ElementAt(index + 1);
+                }
+
             }
         }
 
