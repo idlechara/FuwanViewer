@@ -35,6 +35,7 @@ namespace FuwanViewer.Presentation.SampleData.Other
                 Tag.Horror,
                 Tag.Mystery
             };
+
             Screenshoots = new List<BitmapImage>(8)
             {
                 new BitmapImage(new Uri("pack://application:,,,/FuwanViewer.Presentation;component/SampleData/Images/Ef1.jpg")),

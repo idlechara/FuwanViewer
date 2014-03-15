@@ -24,6 +24,7 @@ namespace FuwanViewer.Presentation.ViewModels
         #region Fields and Properties
 
         internal VisualNovel _novel;
+        internal BitmapImage _current_screnshot;
 
         // there was some weird bug due to the way WPF's tab control works,
         // end even though, Cover and such properties, shoudln't be ever called when novel == null,
@@ -78,6 +79,24 @@ namespace FuwanViewer.Presentation.ViewModels
         //Kuky-code end
 
         public BitmapImage MainArt { get { return _novel != null ? _novel.MainArt : null; } }
+
+        public BitmapImage CurrentScreenshot { 
+            get{
+                return _current_screnshot;
+            }
+            set {
+                _current_screnshot = value;
+                OnPropertyChanged("CurrentScreenshot");
+                OnPropertyChanged("ScreenshotModeEnabled");
+            } 
+        }
+
+        public Boolean ScreenshotModeEnabled { 
+            get 
+            { 
+                return CurrentScreenshot != null ? true : false; 
+            } 
+        }
         public ICollection<BitmapImage> Screenshoots { get { return _novel != null ? _novel.Screenshoots : null; } }
 
         public override string DisplayName { get { return Title; } }
@@ -89,6 +108,7 @@ namespace FuwanViewer.Presentation.ViewModels
         public ICommand RefreshVisualNovelCommand { get; set; }
         public ICommand HandleRequestNavigateCommand { get; set; }
         public ICommand ImageLoadedCommand { get; set; }
+        public ICommand ToggleScreenshotViewCommand { get; set; }
 
         #endregion // Fields and Properties
 
@@ -101,6 +121,7 @@ namespace FuwanViewer.Presentation.ViewModels
             this.RefreshVisualNovelCommand = new RelayCommand(RefreshVisualNovel);
             this.HandleRequestNavigateCommand = new RelayCommand(HandleRequestNavigate);
             this.ImageLoadedCommand = new RelayCommand(ImageLoaded);
+            this.ToggleScreenshotViewCommand = new RelayCommand(ToggleScreenshotView);
         }
 
         #endregion // Constructors
@@ -117,6 +138,20 @@ namespace FuwanViewer.Presentation.ViewModels
         #endregion // Event Handlers
 
         #region Commands
+
+        private void ToggleScreenshotView(object param)
+        {
+            if (CurrentScreenshot == null)
+            {
+                BitmapImage parameter = (BitmapImage)param;
+                CurrentScreenshot = parameter;
+            }
+            else
+            {
+                CurrentScreenshot = null;
+            }
+        }
+
 
         private void RefreshVisualNovel(object param)
         {

@@ -14,6 +14,9 @@ namespace FuwanViewer.Presentation.ViewModels
     {
         public StubVisualNovelViewModel() 
             : base(new StubVisualNovel())
-        {}
+        {
+
+            CurrentScreenshot = new BitmapImage(new Uri("pack://application:,,,/FuwanViewer.Presentation;component/SampleData/Images/Ef1.jpg"));
+        }
     }
 }

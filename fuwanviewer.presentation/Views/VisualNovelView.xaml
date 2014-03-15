@@ -1,4 +1,5 @@
-﻿<UserControl x:Class="FuwanViewer.Presentation.Views.VisualNovelView"
+﻿<UserControl Name="VNV"
+             x:Class="FuwanViewer.Presentation.Views.VisualNovelView"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
@@ -8,14 +9,31 @@
              xmlns:controls="clr-namespace:FuwanViewer.Presentation.Views"
              xmlns:vm="clr-namespace:FuwanViewer.Presentation.ViewModels"
              mc:Ignorable="d"
-             d:DesignHeight="1688" d:DesignWidth="1003"
+             d:DesignHeight="859.642" d:DesignWidth="1044.791"
              d:DataContext="{d:DesignInstance Type={x:Type vm:StubVisualNovelViewModel}, IsDesignTimeCreatable=True}">
-
+    
     <UserControl.Resources>
         <converters:TagListToStringConverter x:Key="myCollectionToStringConverter"/>
         <converters:BoolToStringConverter x:Key="boolToStringConverter"/>
         <converters:BytesToStringConverter x:Key="byteToStringConverter"/>
 
+        <Style x:Key="NoButtonBorder" TargetType="{x:Type Button}">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type Button}">
+                        <ContentPresenter                  
+                            Margin="{TemplateBinding Padding}"                  
+                            HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"                  
+                            VerticalAlignment="{TemplateBinding VerticalContentAlignment}"                  
+                            SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"                  
+                            ContentTemplate="{TemplateBinding ContentTemplate}"                  
+                            RecognizesAccessKey="True"                  
+                            Content="{TemplateBinding Content}" />
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        
         <Style x:Key="TorrentHiding" TargetType="StackPanel">
             <Style.Triggers>
                 <DataTrigger Binding="{Binding TorrentExists}" Value="False">
@@ -65,40 +83,11 @@
         </Style>
 
         <Style x:Key="screenshot" TargetType="Image">
-            <Style.Triggers>
-                <EventTrigger RoutedEvent="MouseLeftButtonDown">
-                    <BeginStoryboard>
-                        <Storyboard>
-                            <DoubleAnimationUsingKeyFrames Duration="0:0:.4" 
-                               Storyboard.TargetProperty="Width">
-                                <DoubleAnimationUsingKeyFrames.KeyFrames>
-                                    <SplineDoubleKeyFrame Value="670" 
-                                           KeyTime="0:0:.4" KeySpline="0.25,0.25 0.6,1"/>
-                                </DoubleAnimationUsingKeyFrames.KeyFrames>
-                            </DoubleAnimationUsingKeyFrames>
-
-                            <!--<DoubleAnimation Storyboard.TargetProperty="Width" To="690" Duration="0:0:.5" />-->
-                        </Storyboard>
-                    </BeginStoryboard>
-                </EventTrigger>
-                <EventTrigger RoutedEvent="MouseRightButtonDown">
-                    <BeginStoryboard>
-                        <Storyboard>
-                            <DoubleAnimationUsingKeyFrames Duration="0:0:.4" 
-                               Storyboard.TargetProperty="Width">
-                                <DoubleAnimationUsingKeyFrames.KeyFrames>
-                                    <SplineDoubleKeyFrame Value="160" 
-                                           KeyTime="0:0:.4" KeySpline="0.25,0.25 0.6,1"/>
-                                </DoubleAnimationUsingKeyFrames.KeyFrames>
-                            </DoubleAnimationUsingKeyFrames>
-                        </Storyboard>
-                    </BeginStoryboard>
-                </EventTrigger>
-            </Style.Triggers>
+            
 
             <Setter Property="Margin" Value="2"></Setter>
             <Setter Property="RenderOptions.BitmapScalingMode" Value="HighQuality" ></Setter>
-            <Setter Property="Width" Value="160"></Setter>
+            <Setter Property="Width" Value="158"></Setter>
             <Setter Property="Height" Value="auto"></Setter>
         </Style>
 
@@ -119,132 +108,278 @@
         <ImageBrush ImageSource="{Binding Path=MainArt}" Opacity="0.2" Stretch="UniformToFill"/>
     </UserControl.Background>
 
-    <ScrollViewer Style="{StaticResource DefaultFont}">
-        <!-- Main stack -->
-        <StackPanel Orientation="Vertical"  MaxWidth="700">
+    <Canvas Name="RenderingCanvas" 
+            Width="{Binding Path=ActualWidth, ElementName=VNV}" Height="{Binding Path=ActualHeight, ElementName=VNV}">
 
-            <Image Name="MainArt"  Source="{Binding Path=MainArt}" Height="auto" Margin="5"></Image>
+        <!-- The screenshot of ded -->
+        <ScrollViewer Width="{Binding Path=ActualWidth, ElementName=VNV}" Height="{Binding Path=ActualHeight, ElementName=VNV}" 
+                      Opacity="1.0">
+            <ScrollViewer.Style>
+            <Style TargetType="ScrollViewer" BasedOn="{StaticResource DefaultFont}">
+                <Setter Property="Opacity" Value="1.0"></Setter>
+                <Setter Property="Visibility" Value="Visible"></Setter>
 
-            <StackPanel Orientation="Vertical" Margin="10" Height="auto">
-                <TextBlock Text="{Binding Title}" Style="{StaticResource Title}"/>
-                <DockPanel>
-                    <TextBlock Text="Company: "/>
-                    <TextBlock Text="{Binding Company}"/>
-                </DockPanel>
-                <DockPanel>
-                    <TextBlock Text="Release date: "/>
-                    <TextBlock Text="{Binding ReleaseDate}" />
-                </DockPanel>
-                <DockPanel>
-                    <TextBlock Text="Genres: "/>
-                    <TextBlock Text="{Binding Path=Tags, Converter={StaticResource myCollectionToStringConverter}}" />
-                </DockPanel>
-                <DockPanel>
-                    <TextBlock Text="EGS Score: "/>
-                    <TextBlock Text="{Binding EgsScore}" />
-                    <TextBlock Text=" out of 100 from "/>
-                    <TextBlock Text="{Binding EgsVotes}" />
-                    <TextBlock Text=" votes"/>
-                </DockPanel>
+                <Style.Triggers>
+                    <DataTrigger Binding="{Binding ScreenshotModeEnabled}" Value="True">
+                        <DataTrigger.EnterActions>
+                            <BeginStoryboard>
+                                <Storyboard>
+                                    <DoubleAnimationUsingKeyFrames Duration="0:0:.4" 
+                                            Storyboard.TargetProperty="Opacity">
+                                        <DoubleAnimationUsingKeyFrames.KeyFrames>
+                                            <SplineDoubleKeyFrame Value="1" 
+                                           KeyTime="0:0:.4" KeySpline="0.25,0.25 0.6,1"/>
+                                        </DoubleAnimationUsingKeyFrames.KeyFrames>
+                                    </DoubleAnimationUsingKeyFrames>
 
-                <TextBlock Text="Links:" Margin="0,10,0,0"/>
-                <DockPanel>
-                    <TextBlock Margin="5,2,0,0">
+                                    <ObjectAnimationUsingKeyFrames Duration="0:0:0" Storyboard.TargetProperty="(UIElement.Visibility)">
+                                        <DiscreteObjectKeyFrame KeyTime="0:0:0" Value="{x:Static Visibility.Visible}"/>
+                                    </ObjectAnimationUsingKeyFrames>
+                                </Storyboard>
+                            </BeginStoryboard>
+                        </DataTrigger.EnterActions>
+
+                        <DataTrigger.ExitActions>
+                            <BeginStoryboard>
+                                <Storyboard>
+                                    <DoubleAnimationUsingKeyFrames Duration="0:0:.4" 
+                                            Storyboard.TargetProperty="Opacity">
+                                        <DoubleAnimationUsingKeyFrames.KeyFrames>
+                                            <SplineDoubleKeyFrame Value="0" 
+                                           KeyTime="0:0:.4" KeySpline="0.25,0.25 0.6,1"/>
+                                        </DoubleAnimationUsingKeyFrames.KeyFrames>
+                                    </DoubleAnimationUsingKeyFrames>
+
+
+                                    <ObjectAnimationUsingKeyFrames Duration="0:0:4" Storyboard.TargetProperty="(UIElement.Visibility)">
+                                        <DiscreteObjectKeyFrame KeyTime="0:0:4" Value="{x:Static Visibility.Hidden}"/>
+                                    </ObjectAnimationUsingKeyFrames>
+                                </Storyboard>
+                            </BeginStoryboard>
+                        </DataTrigger.ExitActions>
+                    </DataTrigger>
+                </Style.Triggers>
+
+            </Style>
+            </ScrollViewer.Style>
+
+            <!-- Main stack -->
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition></RowDefinition>
+                    <RowDefinition Height="auto" ></RowDefinition>
+                    <RowDefinition></RowDefinition>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition></ColumnDefinition>
+                    <ColumnDefinition Width="auto" ></ColumnDefinition>
+                    <ColumnDefinition></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+
+                <!-- a longer line plz-->
+                <Button Grid.Column="1" Grid.Row="1" Style="{StaticResource NoButtonBorder}" 
+                                        Command="{Binding ToggleScreenshotViewCommand}"
+                                        CommandParameter="{Binding}">
+                    <Image  Source="{Binding Path=CurrentScreenshot}" Width="auto" Height="auto">
+                    </Image>
+                </Button>
+                
+
+            </Grid>
+        </ScrollViewer>
+
+        <!-- The main view -->
+        <ScrollViewer Width="{Binding Path=ActualWidth, ElementName=VNV}" Height="{Binding Path=ActualHeight, ElementName=VNV}">
+            <ScrollViewer.Style>
+                <Style TargetType="ScrollViewer" BasedOn="{StaticResource DefaultFont}">
+                    <Setter Property="Opacity" Value="0.0"></Setter>
+                    <Setter Property="Visibility" Value="Hidden"></Setter>
+                    
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding ScreenshotModeEnabled}" Value="False">
+                            <DataTrigger.EnterActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <DoubleAnimationUsingKeyFrames Duration="0:0:.4" 
+                                            Storyboard.TargetProperty="Opacity">
+                                            <DoubleAnimationUsingKeyFrames.KeyFrames>
+                                                <SplineDoubleKeyFrame Value="1" 
+                                           KeyTime="0:0:.4" KeySpline="0.25,0.25 0.6,1"/>
+                                            </DoubleAnimationUsingKeyFrames.KeyFrames>
+                                        </DoubleAnimationUsingKeyFrames>
+
+                                        <ObjectAnimationUsingKeyFrames Duration="0:0:0" Storyboard.TargetProperty="(UIElement.Visibility)">
+                                            <DiscreteObjectKeyFrame KeyTime="0:0:0" Value="{x:Static Visibility.Visible}"/>
+                                        </ObjectAnimationUsingKeyFrames>
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </DataTrigger.EnterActions>
+                            
+                            <DataTrigger.ExitActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <DoubleAnimationUsingKeyFrames Duration="0:0:.4" 
+                                            Storyboard.TargetProperty="Opacity">
+                                            <DoubleAnimationUsingKeyFrames.KeyFrames>
+                                                <SplineDoubleKeyFrame Value="0" 
+                                           KeyTime="0:0:.4" KeySpline="0.25,0.25 0.6,1"/>
+                                            </DoubleAnimationUsingKeyFrames.KeyFrames>
+                                        </DoubleAnimationUsingKeyFrames>
+
+
+                                        <ObjectAnimationUsingKeyFrames Duration="0:0:4" Storyboard.TargetProperty="(UIElement.Visibility)">
+                                            <DiscreteObjectKeyFrame KeyTime="0:0:4" Value="{x:Static Visibility.Hidden}"/>
+                                        </ObjectAnimationUsingKeyFrames>
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </DataTrigger.ExitActions>
+                        </DataTrigger>
+                    </Style.Triggers>
+                    
+                </Style>
+            </ScrollViewer.Style>
+
+            <!-- Main stack -->
+            <StackPanel Orientation="Vertical"  MaxWidth="700">
+
+                <Image Name="MainArt"  Source="{Binding Path=MainArt}" Height="auto" Margin="5"></Image>
+
+                <StackPanel Orientation="Vertical" Margin="10" Height="auto">
+                    <TextBlock Text="{Binding Title}" Style="{StaticResource Title}"/>
+                    <DockPanel>
+                        <TextBlock Text="Company: "/>
+                        <TextBlock Text="{Binding Company}"/>
+                    </DockPanel>
+                    <DockPanel>
+                        <TextBlock Text="Release date: "/>
+                        <TextBlock Text="{Binding ReleaseDate}" />
+                    </DockPanel>
+                    <DockPanel>
+                        <TextBlock Text="Genres: "/>
+                        <TextBlock Text="{Binding Path=Tags, Converter={StaticResource myCollectionToStringConverter}}" />
+                    </DockPanel>
+                    <DockPanel>
+                        <TextBlock Text="EGS Score: "/>
+                        <TextBlock Text="{Binding EgsScore}" />
+                        <TextBlock Text=" out of 100 from "/>
+                        <TextBlock Text="{Binding EgsVotes}" />
+                        <TextBlock Text=" votes"/>
+                    </DockPanel>
+
+                    <TextBlock Text="Links:" Margin="0,10,0,0"/>
+                    <DockPanel>
+                        <TextBlock Margin="5,2,0,0">
                         <Hyperlink Command="{Binding HandleRequestNavigateCommand}" CommandParameter="{Binding FuwanovelUrl}">
                             Fuwanovel
                         </Hyperlink>
-                    </TextBlock>
-                    <TextBlock Margin="5,2,0,0">
+                        </TextBlock>
+                        <TextBlock Margin="5,2,0,0">
                         <Hyperlink Command="{Binding HandleRequestNavigateCommand}" CommandParameter="{Binding TranslationHomepageUrl}">
                             Translation Homepage
                         </Hyperlink>
-                    </TextBlock>
-                    <TextBlock Style="{StaticResource WalkthroughHiding}" Margin="5,2,0,0">
+                        </TextBlock>
+                        <TextBlock Style="{StaticResource WalkthroughHiding}" Margin="5,2,0,0">
                         <Hyperlink Command="{Binding HandleRequestNavigateCommand}" CommandParameter="{Binding WalkthroughUrl}">
                             Walktrough
                         </Hyperlink>
-                    </TextBlock>
-                    <TextBlock Style="{StaticResource ForumHiding}" Margin="5,2,0,0">
+                        </TextBlock>
+                        <TextBlock Style="{StaticResource ForumHiding}" Margin="5,2,0,0">
                         <Hyperlink Command="{Binding HandleRequestNavigateCommand}" CommandParameter="{Binding ForumUrl}">
                             Forum
                         </Hyperlink>
-                    </TextBlock>
-                    <TextBlock Style="{StaticResource FaqHiding}" Margin="5,2,0,0">
+                        </TextBlock>
+                        <TextBlock Style="{StaticResource FaqHiding}" Margin="5,2,0,0">
                         <Hyperlink  Command="{Binding HandleRequestNavigateCommand}" CommandParameter="{Binding FaqUrl}">
                             FAQ
                         </Hyperlink>
-                    </TextBlock>
-                </DockPanel>
-
-                <TextBlock Text="Screenshots (left click to enlarge, right click to shrink):" Margin="0,10,0,0"/>
-
-                <ItemsControl x:Name="screenshotPanel" Margin="10" ItemsSource="{Binding Screenshoots}">
-                    <ItemsControl.Template>
-                        <ControlTemplate>
-                            <WrapPanel FlowDirection="LeftToRight" IsItemsHost="true">
-                            </WrapPanel>
-                        </ControlTemplate>
-                    </ItemsControl.Template>
-
-                    <ItemsControl.ItemTemplate>
-                        <DataTemplate>
-                            <Image Style="{StaticResource screenshot}" Source="{Binding}" >
-                            </Image>
-                        </DataTemplate>
-                    </ItemsControl.ItemTemplate>
-                </ItemsControl>
-
-                <DockPanel Margin="0,10">
-                    <TextBlock Text="Summary: "/>
-                    <TextBlock Text="{Binding Summary}"  TextWrapping="Wrap" Height="auto" Width="auto"/>
-                </DockPanel>
-
-                <DockPanel Margin="0,10">
-                    <TextBlock Text="Translation team: "/>
-                    <TextBlock Text="{Binding TeamListing}"  TextWrapping="Wrap" Height="auto" Width="auto"/>
-                </DockPanel>
-
-                <DockPanel Margin="0,10">
-                    <TextBlock Text="Notes: "/>
-                    <TextBlock Text="{Binding Notes}"  TextWrapping="Wrap" Height="auto" Width="auto"/>
-                </DockPanel>
-
-                <DockPanel Margin="0,10">
-                    <TextBlock Text="Troubleshoot: "/>
-                    <TextBlock Text="{Binding TroubleshootText}"  TextWrapping="Wrap" Height="auto" Width="auto"/>
-                </DockPanel>
-
-                <StackPanel Style="{StaticResource TorrentHiding}">
-                    <DockPanel Margin="0,10,0,3">
-                        <TextBlock Text="Torrent Info: "/>
+                        </TextBlock>
                     </DockPanel>
-                    <DockPanel Margin="10,0">
-                        <TextBlock Text="Name: "/>
-                        <TextBlock Text="{Binding Path=TorrentName}" />
+
+                    <TextBlock Text="Screenshots (left click to enlarge, right click to shrink):" Margin="0,10,0,0"/>
+
+                    <ItemsControl x:Name="screenshotPanel" Margin="10" ItemsSource="{Binding Screenshoots}">
+                        <ItemsControl.Template>
+                            <ControlTemplate>
+                                <WrapPanel FlowDirection="LeftToRight" IsItemsHost="true">
+                                </WrapPanel>
+                            </ControlTemplate>
+                        </ItemsControl.Template>
+
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                                <!-- a longer line plz-->
+                                <Button Style="{StaticResource NoButtonBorder}" 
+                                        Command="{Binding RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}, Path=DataContext.ToggleScreenshotViewCommand}"
+                                        CommandParameter="{Binding}">
+                                    <Image  Source="{Binding}"  >
+                                        <Image.Style>
+                                        <Style TargetType="Image" BasedOn="{StaticResource screenshot}"> 
+                                        </Style>
+                                    </Image.Style>
+                                    </Image>
+                                </Button>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+
+                    <DockPanel Margin="0,10">
+                        <TextBlock Text="Summary: "/>
+                        <TextBlock Text="{Binding Summary}"  TextWrapping="Wrap" Height="auto" Width="auto"/>
                     </DockPanel>
-                    <DockPanel Margin="10,0">
-                        <TextBlock Text="Size: "/>
-                        <TextBlock Text="{Binding Path=TorrentSize,  Converter={StaticResource byteToStringConverter}}" />
+
+                    <DockPanel Margin="0,10">
+                        <TextBlock Text="Translation team: "/>
+                        <TextBlock Text="{Binding TeamListing}"  TextWrapping="Wrap" Height="auto" Width="auto"/>
                     </DockPanel>
-                    <DockPanel Margin="10,0">
-                        <TextBlock Text="Requires Install: "/>
-                        <TextBlock Text="{Binding Path=TorrentRequiresInstall, Converter={StaticResource boolToStringConverter}}" />
+
+                    <DockPanel Margin="0,10">
+                        <TextBlock Text="Notes: "/>
+                        <TextBlock Text="{Binding Notes}"  TextWrapping="Wrap" Height="auto" Width="auto"/>
                     </DockPanel>
-                    <DockPanel Margin="10,0">
-                        <TextBlock Text="Requires Japanese locale: "/>
-                        <TextBlock Text="{Binding Path=TorrentRequiresJpLocale, Converter={StaticResource boolToStringConverter}}" />
+
+                    <DockPanel Margin="0,10">
+                        <TextBlock Text="Troubleshoot: "/>
+                        <TextBlock Text="{Binding TroubleshootText}"  TextWrapping="Wrap" Height="auto" Width="auto"/>
                     </DockPanel>
-                    <DockPanel Margin="10,0">
-                        <TextBlock Text="URL: "/>
-                        <TextBlock>
+
+                    <StackPanel Style="{StaticResource TorrentHiding}">
+                        <DockPanel Margin="0,10,0,3">
+                            <TextBlock Text="Torrent Info: "/>
+                        </DockPanel>
+                        <DockPanel Margin="10,0">
+                            <TextBlock Text="Name: "/>
+                            <TextBlock Text="{Binding Path=TorrentName}" />
+                        </DockPanel>
+                        <DockPanel Margin="10,0">
+                            <TextBlock Text="Size: "/>
+                            <TextBlock Text="{Binding Path=TorrentSize,  Converter={StaticResource byteToStringConverter}}" />
+                        </DockPanel>
+                        <DockPanel Margin="10,0">
+                            <TextBlock Text="Requires Install: "/>
+                            <TextBlock Text="{Binding Path=TorrentRequiresInstall, Converter={StaticResource boolToStringConverter}}" />
+                        </DockPanel>
+                        <DockPanel Margin="10,0">
+                            <TextBlock Text="Requires Japanese locale: "/>
+                            <TextBlock Text="{Binding Path=TorrentRequiresJpLocale, Converter={StaticResource boolToStringConverter}}" />
+                        </DockPanel>
+                        <DockPanel Margin="10,0">
+                            <TextBlock Text="URL: "/>
+                            <TextBlock>
                         <Hyperlink Command="{Binding HandleRequestNavigateCommand}" CommandParameter="{Binding TorrentURL}">
                             <TextBlock Text="{Binding TorrentURL}"></TextBlock>
                         </Hyperlink>
                     </TextBlock>
 
-                    </DockPanel>
+                        </DockPanel>
+                    </StackPanel>
                 </StackPanel>
             </StackPanel>
-        </StackPanel>
-    </ScrollViewer>
+        </ScrollViewer>
+
+
+       
+
+        <!-- to Hardcore or not to hardcode... that's the dillema. -->
+        
+    </Canvas>
 </UserControl>
